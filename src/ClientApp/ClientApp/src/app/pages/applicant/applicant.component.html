@@ -1,0 +1,22 @@
+<hr>
+<div class="row">
+  <div class="container">
+    <ul class="progressbar">
+      <li class="active" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+        <a class="nav-link text-dark" [routerLink]='["/1"]'>Login</a>
+      </li>
+      <li class="active" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+        <a class="nav-link text-dark" [routerLink]='["/2"]'>Submited</a>
+      </li>
+      <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+        <a class="nav-link text-dark" [routerLink]='["/3"]'>Approved</a>
+      </li>
+      <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+        <a class="nav-link text-dark" [routerLink]='["/4"]'>Completed</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div>
+  <router-outlet></router-outlet>
+</div>
