@@ -18,19 +18,19 @@ export class AgentComponent implements OnInit {
 
   reviewApplicant(applicantId: string) {
     this.router.navigate([`review/${applicantId}`]);
-    this.messageService.add(`Reviewing ApplicantId: ${applicantId}`);
+    // this.messageService.add(`Reviewing ApplicantId: ${applicantId}`);
   }
 
   accept(applicantId: string): void {
     this.applicantService.acceptApplicant(applicantId);
 
-    this.messageService.add(`Accepted ApplicantId: ${applicantId}`);
+    // this.messageService.add(`Accepted ApplicantId: ${applicantId}`);
   }
 
   refuse(applicantId: string): void {
     this.applicantService.refuseApplicant(applicantId);
 
-    this.messageService.add(`Refused ApplicantId: ${applicantId}`);
+    // this.messageService.add(`Refused ApplicantId: ${applicantId}`);
   }
 
 }

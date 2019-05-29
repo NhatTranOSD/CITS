@@ -38,7 +38,7 @@ export class ReviewComponent implements OnInit {
   accept(applicantId: string): void {
     this.applicantService.acceptApplicant(applicantId);
 
-    this.messageService.add(`Accepted ApplicantId: ${applicantId}`);
+    alert(`Accepted ApplicantId: ${applicantId}`);
 
     this.router.navigate(['/agent']);
   }
@@ -46,7 +46,7 @@ export class ReviewComponent implements OnInit {
   refuse(applicantId: string): void {
     this.applicantService.refuseApplicant(applicantId);
 
-    this.messageService.add(`Refuse ApplicantId: ${applicantId}`);
+    alert(`Refused ApplicantId: ${applicantId}`);
 
     this.router.navigate(['/agent']);
   }

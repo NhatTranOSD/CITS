@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'ClientApp';
-  isLoading = false;
+  isLoading = true;
 
   constructor(private authService: AuthService, private router: Router) {
     // localStorage.clear();
@@ -17,11 +17,8 @@ export class AppComponent {
   }
 
   isLogin(): void {
-    if (this.authService.checkLogin()) {
-      this.router.navigate(['/applicant']);
-    } else {
-      this.router.navigate(['/login']);
-    }
+
+    this.authService.checkLogin();
 
     this.isLoading = false;
   }

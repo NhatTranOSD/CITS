@@ -5,6 +5,11 @@
             <p class="mb-0">Orient Software Development</p>
         </div>
     </div>
+    <div *ngIf="authService.IsLogin()">
+        <div class="text-right">
+            <a type="button" class="btn btn-link" (click)="authService.logout()">Logout</a>
+        </div>
+    </div>
 </div>
 <div class="container">
     <router-outlet></router-outlet>

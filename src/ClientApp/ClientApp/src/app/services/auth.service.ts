@@ -9,21 +9,65 @@ export class AuthService {
 
   private isLogin = false;
 
-  private user: User;
+  private user: User = new User();
 
   constructor(private router: Router) { }
 
-  login(user: User): void {
+  public IsLogin(): boolean {
 
+    const isLogin = JSON.parse(localStorage.getItem('isLogin'));
+
+    if (isLogin != null && isLogin === true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public login(user: User): void {
+
+    user.type = 2;
     this.isLogin = true;
     this.user = user;
 
-    localStorage.setItem('isLogin', this.isLogin.toString());
+    localStorage.setItem('isLogin', JSON.stringify(this.isLogin));
 
-    localStorage.setItem('currentUser', JSON.stringify(User));
+    localStorage.setItem('currentUser', JSON.stringify(this.user));
+
+    console.log(localStorage.getItem('currentUser'));
+    console.log(localStorage.getItem('isLogin'));
 
     // Check UserType And redirect here
-    user.type = 1;
+    this.directUser(user);
+  }
+
+  public getCurrentUser(): User {
+
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    if (currentUser != null) {
+      this.user = currentUser;
+    }
+    return this.user;
+  }
+
+  public checkLogin(): void {
+    const isLogin = JSON.parse(localStorage.getItem('isLogin'));
+
+    if (isLogin != null) {
+      this.isLogin = isLogin;
+    }
+
+    if (this.isLogin === true) {
+      this.getCurrentUser();
+      this.directUser(this.user);
+    } else {
+      this.router.navigate(['/login']);
+    }
+
+  }
+
+  public directUser(user: User): void {
     if (user.type === 1) { // type applicant
       this.router.navigate(['/applicant']);
     } else if (user.type === 2) {
@@ -33,17 +77,9 @@ export class AuthService {
     }
   }
 
-  getCurrentUser(): User {
-    return this.user;
-  }
-
-  checkLogin(): boolean {
-    return this.isLogin;
-  }
-
-  logout(): boolean {
+  public logout(): void {
     // Clear Session memory
     localStorage.clear();
-    return true;
+    this.router.navigate(['/login']);
   }
 }
