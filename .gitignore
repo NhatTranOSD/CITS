@@ -12,3 +12,14 @@ src/RFQ/Apis/ApplicantApi/bin/
 src/RFQ/Apis/ApplicantApi/obj/
 src/RFQ/Apis/AuthApi/obj/
 src/RFQ/Apis/AuthApi/bin/
+/src/RFQ/RFQ.Service/obj
+/src/RFQ/WebApplication1/obj
+/src/RFQ/RFQ.Service/bin/Debug/netcoreapp2.1
+/src/RFQ/RFQ.Entites/obj
+/src/RFQ/RFQ.Entites/bin/Debug/netcoreapp2.1
+/src/RFQ/RFQ.Data/obj
+/src/RFQ/RFQ.Data/bin/Debug/netcoreapp2.1
+/src/RFQ/RFQ.Common/obj
+/src/RFQ/RFQ.Common/bin/Debug/netcoreapp2.1
+/src/RFQ/RFQ.Api/obj
+/src/RFQ/RFQ.Api/bin/Debug/netcoreapp2.1
