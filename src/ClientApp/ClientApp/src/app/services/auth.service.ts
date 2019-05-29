@@ -23,7 +23,6 @@ export class AuthService {
     localStorage.setItem('currentUser', JSON.stringify(User));
 
     // Check UserType And redirect here
-
     user.type = 1;
     if (user.type === 1) { // type applicant
       this.router.navigate(['/applicant']);

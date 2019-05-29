@@ -5,37 +5,33 @@
         </h3>
     </div>
 </div>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">User Name</th>
-            <th scope="col">Request Time</th>
-            <th scope="col">Handle</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>
-                <button type="button" class="btn btn-success">Success</button>|
-                <button type="button" class="btn btn-danger">Danger</button>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-        </tr>
-    </tbody>
-</table>
+<div *ngIf="applicantService.getApplicants()">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">applicantId</th>
+                <th scope="col">applicant Name</th>
+                <th scope="col">Adress</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Status</th>
+                <th scope="col">Created Date</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of applicantService.getApplicants()">
+                <td>{{item.applicantId}}</td>
+                <td>{{item.applicantName}}</td>
+                <td>{{item.address}}</td>
+                <td>{{item.phoneNumber}}</td>
+                <td>{{item.status}}</td>
+                <td>{{item.createDate}}</td>
+                <td>
+                    <button (click)="reviewApplicant(item.applicantId)" type="button" class="btn btn-info">Review</button>|
+                    <button (click)="accept(item.applicantId)" type="button" class="btn btn-success">Accept</button>|
+                    <button (click)="refuse(item.applicantId)" type="button" class="btn btn-danger">Refuse</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

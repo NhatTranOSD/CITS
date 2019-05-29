@@ -6,12 +6,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import { LoginComponent } from './pages/login/login.component';
+import { ReviewComponent } from './pages/review/review.component';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
-    AppComponent, LoginComponent
+    AppComponent, LoginComponent, ReviewComponent, MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +22,8 @@ import { LoginComponent } from './pages/login/login.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    PdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
