@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from '../../models/user.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,20 +13,14 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   submitted: boolean;
-  isLogin: boolean = false;
-  processBar = {
-    logged: true,
-    submited: false,
-    approved: false,
-    completed: false,
-  };
+  isLogin = false;
 
-  user = {
+  user: User = {
     userName: '',
     passWord: '',
-  }
+  };
 
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -32,7 +28,9 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    this.checkLogin();
+    if (this.authService.checkLogin) {
+      this.authService.logout();
+    }
   }
 
   // convenience getter for easy access to form fields
@@ -43,18 +41,6 @@ export class LoginComponent implements OnInit {
     this.user.userName = this.f.username.value;
     this.user.passWord = this.f.password.value;
 
-    localStorage.setItem('processBar', JSON.stringify(this.processBar));
-    localStorage.setItem('user', JSON.stringify(this.user));
-
-    this.router.navigate(['/applicant']);
-  }
-
-  // get WorkFlow info of user
-  checkLogin(): void {
-    let store = JSON.parse(localStorage.getItem('user'));
-
-    if (store != null) {
-      this.isLogin = true;
-    }
+    this.authService.login(this.user);
   }
 }

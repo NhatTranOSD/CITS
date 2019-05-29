@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Applicant } from '../../models/applicant.model';
+import { AuthService } from '../../services/auth.service';
+import { ApplicantService } from '../../services/applicant.service';
 
 @Component({
   selector: 'app-applicant',
@@ -7,28 +10,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApplicantComponent implements OnInit {
 
-  processBar = {
-    logged: false,
-    submited: false,
-    approved: false,
-    completed: false,
-  };
+  applicant: Applicant;
+  submitted = false;
+  formData: FormData;
 
-  constructor() {
+  constructor(private authService: AuthService, private applicantService: ApplicantService) {
   }
 
   ngOnInit() {
-    this.getWorkFlowInfo();
+    this.applicant = new Applicant();
+
+    // get ApplicantInfo
+    console.log(this.authService.getCurrentUser());
+    console.log(this.applicantService.getApplicantInfo('userId'));
   }
 
-  // get WorkFlow info of user
-  getWorkFlowInfo(): void {
-    let store = JSON.parse(localStorage.getItem('processBar'));
+  fileChange(event) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      const file: File = fileList[0];
+      const formData: FormData = new FormData();
+      formData.append('uploadFile', file, file.name);
 
-    if (store != null) {
-      this.processBar = store;
+      this.formData = formData;
     }
-    console.log(this.processBar);
   }
 
+  onSubmit() {
+    this.submitted = true;
+
+    this.applicantService.uploadFiles(this.formData);
+  }
 }
