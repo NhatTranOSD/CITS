@@ -9,78 +9,63 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-const baseUrl = 'https://localhost:5001/';
+const baseUrl = 'http://localhost:5001/';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApplicantService {
 
-  constructor(private http: HttpClient) { }
+  public applicants: Applicant[];
 
-  getApplicants(): Applicant[] {
-
-    // get Applicants here
-
-    // fake applicants
-    const applicants: Applicant[] = [
-      { applicantId: '1', applicantName: 'Nhat', status: 'waiting', createDate: '12/31/1999 12:00:00 AM' },
-      { applicantId: '2', applicantName: 'Nguyen', status: 'waiting', createDate: '12/31/1999 12:00:00 AM' },
-      { applicantId: '3', applicantName: 'Nhi', status: 'waiting', createDate: '12/31/1999 12:00:00 AM' },
-      { applicantId: '4', applicantName: 'Nghia', status: 'waiting', createDate: '12/31/1999 12:00:00 AM' },
-    ];
-
-    return applicants;
+  constructor(private http: HttpClient) {
+    this.getApplicants();
   }
 
-  getApplicantInfo(userId: string): Applicant {
+  public async getApplicants() {
 
-    // get Applicant info here
-    // this.http.get<Applicant>(`${baseUrl}/api/SampleData/WeatherForecasts`, httpOptions).subscribe(result => {
-    //   console.log(result);
-    // }, error => console.error(error));
-
-    return { applicantId: '1', applicantName: 'Nhat', status: 'waiting', createDate: '12/31/1999 12:00:00 AM' };
+    // get Applicants here, by subcrib
+    await this.http.get<Applicant[]>(`${baseUrl}api/v1/Applicant`, httpOptions)
+      .subscribe(result => {
+        this.applicants = result;
+        console.log(result);
+      }, error => console.error(error));;
   }
 
-  uploadFiles(formData: FormData): boolean {
+  public getApplicantInfo(userId: string): any {
+    return this.http.post<Applicant>(`${baseUrl}api/v1/Applicant/${userId}`, httpOptions).pipe(map(result => { return result }));
+  }
 
-    // Upload here
-    // get Applicant info here
-    // this.http.post<boolean>(`${baseUrl}/api/SampleData/WeatherForecasts`, httpOptions).subscribe(result => {
-    //   console.log(result);
-    // }, error => console.error(error));
+  public uploadFiles(formData: FormData): any {
+
+    // return this.http.post<User>(`${baseUrl}api/v1/Auth/login`, user, httpOptions).pipe(map(result => { return result }));
 
     return true;
   }
 
-  getContents(applicantId: string): any {
+  public getContents(applicantId: string): any {
 
-    // Upload here
-    // get Applicant info here
-    // this.http.post<boolean>(`${baseUrl}/api/SampleData/WeatherForecasts`, httpOptions).subscribe(result => {
-    //   console.log(result);
-    // }, error => console.error(error));
+    // return this.http.post<User>(`${baseUrl}api/v1/Auth/login`, user, httpOptions).pipe(map(result => { return result }));
 
     return null;
   }
 
-  acceptApplicant(applicantId: string): boolean {
+  public acceptApplicant(applicantId: string): any {
 
-    // request accept Applicant here
-    // this.http.post<boolean>(`${baseUrl}/api/SampleData/WeatherForecasts`, httpOptions).subscribe(result => {
-    //   console.log(result);
-    // }, error => console.error(error));
+    return this.http.post<Applicant>(`${baseUrl}api/v1/Applicant/accept/${applicantId}`, httpOptions).pipe(map(result => { return result }));
+  }
+
+  public refuseApplicant(applicantId: string): any {
+
+    // return this.http.post<User>(`${baseUrl}api/v1/Auth/login`, user, httpOptions).pipe(map(result => { return result }));
 
     return true;
   }
 
-  refuseApplicant(applicantId: string): boolean {
+  public createApplicant(email: string): any {
 
-    // request refuse Applicant here
-    // this.http.post<boolean>(`${baseUrl}/api/SampleData/WeatherForecasts`, httpOptions).subscribe(result => {
-    //   console.log(result);
-    // }, error => console.error(error));
+    // return this.http.post<User>(`${baseUrl}api/v1/Auth/login`, user, httpOptions).pipe(map(result => { return result }));
+
     return true;
   }
 

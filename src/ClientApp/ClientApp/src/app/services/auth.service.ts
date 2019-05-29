@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+const baseUrl = 'http://localhost:5000/';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +18,7 @@ export class AuthService {
 
   private user: User = new User();
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
   public IsLogin(): boolean {
 
@@ -24,19 +31,8 @@ export class AuthService {
     }
   }
 
-  public login(user: User): void {
-
-    user.type = 2;
-    this.isLogin = true;
-    this.user = user;
-
-    // request to login here
-
-    localStorage.setItem('isLogin', JSON.stringify(this.isLogin));
-    localStorage.setItem('currentUser', JSON.stringify(this.user));
-
-    // Check UserType And redirect here
-    this.directUser(user);
+  public login(user: User): any {
+    return this.http.post<User>(`${baseUrl}api/v1/Auth/login`, user, httpOptions).pipe(map(result => { return result }));
   }
 
   public getCurrentUser(): User {

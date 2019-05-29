@@ -8,3 +8,7 @@ src/RFQ/Infrastructure/obj/
 src/RFQ/Infrastructure/bin/
 src/RFQ/Apis/WorkFlow/bin/
 src/RFQ/ApplicationCore/bin/
+src/RFQ/Apis/ApplicantApi/bin/
+src/RFQ/Apis/ApplicantApi/obj/
+src/RFQ/Apis/AuthApi/obj/
+src/RFQ/Apis/AuthApi/bin/

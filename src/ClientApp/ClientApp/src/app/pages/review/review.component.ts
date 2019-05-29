@@ -3,6 +3,7 @@ import { ApplicantService } from '../../services/applicant.service';
 import { MessageService } from '../../services/message.service';
 import { Applicant } from '../../models/applicant.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-review',
@@ -16,17 +17,22 @@ export class ReviewComponent implements OnInit {
   contentUri = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
 
   constructor(private messageService: MessageService,
-              private router: Router,
-              private applicantService: ApplicantService,
-              private activatedRoute: ActivatedRoute) { }
+    private router: Router,
+    private applicantService: ApplicantService,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
 
     const applicantId = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log(applicantId);
 
-    this.applicant = this.applicantService.getApplicantInfo(applicantId);
-    console.log(this.applicant);
+    this.applicant = this.applicantService.getApplicantInfo(applicantId).pipe(first())
+      .subscribe(
+        data => {
+          this.applicant = data;
+        },
+        error => {
+          console.log(error);
+        });;
 
     this.getContents();
   }
@@ -36,7 +42,16 @@ export class ReviewComponent implements OnInit {
   }
 
   accept(applicantId: string): void {
-    this.applicantService.acceptApplicant(applicantId);
+    this.applicantService.acceptApplicant(applicantId).pipe(first())
+      .subscribe(
+        data => {
+          console.log(data);
+          // reload data
+          this.applicantService.getApplicants();
+        },
+        error => {
+          console.log(error);
+        });;
 
     alert(`Accepted ApplicantId: ${applicantId}`);
 

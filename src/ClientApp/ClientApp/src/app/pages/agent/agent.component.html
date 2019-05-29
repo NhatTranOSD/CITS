@@ -5,7 +5,7 @@
         </h3>
     </div>
 </div>
-<div *ngIf="applicantService.getApplicants()">
+<div>
     <table class="table">
         <thead>
             <tr>
@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of applicantService.getApplicants()">
+            <tr *ngFor="let item of applicantService.applicants">
                 <td>{{item.applicantId}}</td>
                 <td>{{item.applicantName}}</td>
                 <td>{{item.address}}</td>
@@ -27,9 +27,10 @@
                 <td>{{item.status}}</td>
                 <td>{{item.createDate}}</td>
                 <td>
-                    <button (click)="reviewApplicant(item.applicantId)" type="button" class="btn btn-info">Review</button>|
-                    <button (click)="accept(item.applicantId)" type="button" class="btn btn-success">Accept</button>|
-                    <button (click)="refuse(item.applicantId)" type="button" class="btn btn-danger">Refuse</button>
+                    <button (click)="reviewApplicant(item.applicantId)" type="button"
+                        class="btn btn-info">Review</button>
+                    <!-- <button (click)="accept(item.applicantId)" type="button" class="btn btn-success">Accept</button>|
+                    <button (click)="refuse(item.applicantId)" type="button" class="btn btn-danger">Refuse</button> -->
                 </td>
             </tr>
         </tbody>

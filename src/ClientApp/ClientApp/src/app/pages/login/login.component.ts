@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -41,6 +42,18 @@ export class LoginComponent implements OnInit {
     this.user.userName = this.f.username.value;
     this.user.passWord = this.f.password.value;
 
-    this.authService.login(this.user);
+    this.authService.login(this.user).pipe(first())
+      .subscribe(
+        data => {
+          this.isLogin = true;
+
+          localStorage.setItem('isLogin', JSON.stringify(this.isLogin));
+          localStorage.setItem('currentUser', JSON.stringify(data));
+
+          this.authService.directUser(data);
+        },
+        error => {
+          console.log(error);
+        });
   }
 }

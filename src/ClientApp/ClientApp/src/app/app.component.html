@@ -1,13 +1,13 @@
 <div class="container">
     <div class="">
         <div class="alert alert-success" role="alert">
-            <h4 class="alert-heading">Workflow Demo</h4>
+            <h4 class="alert-heading">Workflow</h4>
             <p class="mb-0">Orient Software Development</p>
         </div>
     </div>
     <div *ngIf="authService.IsLogin()">
         <div class="text-right">
-            <a type="button" class="btn btn-link" (click)="authService.logout()">Logout</a>
+            <a type="button" class="btn btn-light" (click)="authService.logout()">Logout</a>
         </div>
     </div>
 </div>

@@ -8,7 +8,7 @@ using RFQ.Infrastructure.Data;
 using RFQ.Infrastructure.Identity;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace RFQ.Apis.WorkFlow
+namespace ApplicantApi
 {
     public class Startup
     {
