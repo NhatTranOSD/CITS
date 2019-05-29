@@ -2,16 +2,16 @@
 <div class="row">
   <div class="container">
     <ul class="progressbar">
-      <li class="active" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+      <li [ngClass]="{'active': processBar.logged}" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
         <a class="nav-link text-dark" [routerLink]='["/1"]'>Login</a>
       </li>
-      <li class="active" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+      <li [ngClass]="{'active': processBar.submited}" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
         <a class="nav-link text-dark" [routerLink]='["/2"]'>Submited</a>
       </li>
-      <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+      <li [ngClass]="{'active': processBar.approved}" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
         <a class="nav-link text-dark" [routerLink]='["/3"]'>Approved</a>
       </li>
-      <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+      <li [ngClass]="{'active': processBar.completed}" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
         <a class="nav-link text-dark" [routerLink]='["/4"]'>Completed</a>
       </li>
     </ul>

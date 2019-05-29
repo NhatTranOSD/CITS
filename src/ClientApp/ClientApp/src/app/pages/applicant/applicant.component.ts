@@ -7,14 +7,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApplicantComponent implements OnInit {
 
-  constructor() { }
+  processBar = {
+    logged: false,
+    submited: false,
+    approved: false,
+    completed: false,
+  };
+
+  constructor() {
+  }
 
   ngOnInit() {
+    this.getWorkFlowInfo();
   }
 
   // get WorkFlow info of user
-  getWorkFlowInfo(userId: string): void {
+  getWorkFlowInfo(): void {
+    let store = JSON.parse(localStorage.getItem('processBar'));
 
+    if (store != null) {
+      this.processBar = store;
+    }
+    console.log(this.processBar);
   }
 
 }
