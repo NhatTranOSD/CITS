@@ -30,12 +30,10 @@ export class AuthService {
     this.isLogin = true;
     this.user = user;
 
+    // request to login here
+
     localStorage.setItem('isLogin', JSON.stringify(this.isLogin));
-
     localStorage.setItem('currentUser', JSON.stringify(this.user));
-
-    console.log(localStorage.getItem('currentUser'));
-    console.log(localStorage.getItem('isLogin'));
 
     // Check UserType And redirect here
     this.directUser(user);
