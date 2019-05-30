@@ -14,7 +14,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-3">Applicant Name: </div>
-                <div class="col-9">{{applicant.applicantName}}</div>
+                <div class="col-9">{{applicant.fullName}}</div>
             </div>
             <div class="row">
                 <div class="col-3">Applicant Address: </div>
@@ -33,12 +33,16 @@
                 <div class="col-9">{{applicant.status}}</div>
             </div>
             <div class="row">
-                <div class="col-3">Applicant CreateDate: </div>
-                <div class="col-9">{{applicant.createDate}}</div>
+                <div class="col-3">Applicant dateOfBirth: </div>
+                <div class="col-9">{{applicant.dateOfBirth}}</div>
             </div>
             <div class="row">
-                <div class="col-3">Applicant latestedUpdateDate: </div>
-                <div class="col-9">{{applicant.latestedUpdateDate}}</div>
+                <div class="col-3">Applicant CreateDate: </div>
+                <div class="col-9">{{applicant.createdDate}}</div>
+            </div>
+            <div class="row">
+                <div class="col-3">Applicant updatedDate: </div>
+                <div class="col-9">{{applicant.updatedDate}}</div>
             </div>
         </div>
     </div>

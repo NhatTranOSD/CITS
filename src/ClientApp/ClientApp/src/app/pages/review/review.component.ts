@@ -17,9 +17,9 @@ export class ReviewComponent implements OnInit {
   contentUri = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
 
   constructor(private messageService: MessageService,
-    private router: Router,
-    private applicantService: ApplicantService,
-    private activatedRoute: ActivatedRoute) { }
+              private router: Router,
+              private applicantService: ApplicantService,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -32,13 +32,13 @@ export class ReviewComponent implements OnInit {
         },
         error => {
           console.log(error);
-        });;
+        });
 
     this.getContents();
   }
 
   getContents(): void {
-    this.applicantService.getContents(this.applicant.applicantId);
+    this.applicantService.getContents(this.applicant.id);
   }
 
   accept(applicantId: string): void {
@@ -51,7 +51,7 @@ export class ReviewComponent implements OnInit {
         },
         error => {
           console.log(error);
-        });;
+        });
 
     alert(`Accepted ApplicantId: ${applicantId}`);
 

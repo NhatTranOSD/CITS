@@ -11,10 +11,11 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { LoginComponent } from './pages/login/login.component';
 import { ReviewComponent } from './pages/review/review.component';
 import { MessageComponent } from './components/message/message.component';
+import { CreateApplicantComponent } from './pages/create-applicant/create-applicant.component';
 
 @NgModule({
   declarations: [
-    AppComponent, LoginComponent, ReviewComponent, MessageComponent
+    AppComponent, LoginComponent, ReviewComponent, MessageComponent, CreateApplicantComponent
   ],
   imports: [
     BrowserModule,

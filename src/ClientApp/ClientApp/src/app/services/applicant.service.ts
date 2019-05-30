@@ -5,11 +5,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
+import { environment } from '../../environments/environment';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-const baseUrl = 'http://localhost:5001/';
+const baseUrl = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root'
@@ -24,16 +26,18 @@ export class ApplicantService {
 
   public async getApplicants() {
 
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
     // get Applicants here, by subcrib
-    await this.http.get<Applicant[]>(`${baseUrl}api/v1/Applicant`, httpOptions)
+    await this.http.get<Applicant[]>(`${baseUrl}api/v1/Applicant/${currentUser.id}`, httpOptions)
       .subscribe(result => {
         this.applicants = result;
         console.log(result);
-      }, error => console.error(error));;
+      }, error => console.error(error));
   }
 
   public getApplicantInfo(userId: string): any {
-    return this.http.post<Applicant>(`${baseUrl}api/v1/Applicant/${userId}`, httpOptions).pipe(map(result => { return result }));
+    return this.http.post<Applicant>(`${baseUrl}api/v1/Applicant/${userId}`, httpOptions).pipe(map(result => result));
   }
 
   public uploadFiles(formData: FormData): any {
@@ -52,7 +56,7 @@ export class ApplicantService {
 
   public acceptApplicant(applicantId: string): any {
 
-    return this.http.post<Applicant>(`${baseUrl}api/v1/Applicant/accept/${applicantId}`, httpOptions).pipe(map(result => { return result }));
+    return this.http.post<Applicant>(`${baseUrl}api/v1/Applicant/accept/${applicantId}`, httpOptions).pipe(map(result => result));
   }
 
   public refuseApplicant(applicantId: string): any {

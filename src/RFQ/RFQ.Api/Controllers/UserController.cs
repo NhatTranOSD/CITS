@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RFQ.Service.Interface;
+using RFQ.Service.Models.Reponses;
 using RFQ.Service.Models.Request;
 
 namespace RFQ.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -26,12 +27,10 @@ namespace RFQ.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<string>> Login([FromBody]LoginRequest model)
+        public async Task<ActionResult<UserReponse>> Login([FromBody]LoginRequest model)
         {
-
             var result = await _userService.Login(model);
             return Ok(result);
-
         }
     }
 }

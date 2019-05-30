@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
-import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
+
+import { User, UserType } from '../models/user.model';
+import { UserLogin } from '../models/userlogin.model';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-const baseUrl = 'http://localhost:5000/';
+const baseUrl = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +19,6 @@ const baseUrl = 'http://localhost:5000/';
 export class AuthService {
 
   private isLogin = false;
-
   private user: User = new User();
 
   constructor(private router: Router, private http: HttpClient) { }
@@ -31,8 +34,8 @@ export class AuthService {
     }
   }
 
-  public login(user: User): any {
-    return this.http.post<User>(`${baseUrl}api/v1/Auth/login`, user, httpOptions).pipe(map(result => { return result }));
+  public login(user: UserLogin): any {
+    return this.http.post<User>(`${baseUrl}api/v1/user/login`, user, httpOptions).pipe(map(result => result));
   }
 
   public getCurrentUser(): User {
@@ -62,9 +65,9 @@ export class AuthService {
   }
 
   public directUser(user: User): void {
-    if (user.type === 1) { // type applicant
+    if (user.userType === UserType.Applicant) { // type applicant
       this.router.navigate(['/applicant']);
-    } else if (user.type === 2) {
+    } else if (user.userType === UserType.Agent) {
       this.router.navigate(['/agent']);
     } else {
       this.router.navigate(['/']);

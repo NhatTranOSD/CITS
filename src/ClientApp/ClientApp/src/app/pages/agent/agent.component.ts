@@ -22,6 +22,10 @@ export class AgentComponent implements OnInit {
     this.router.navigate([`review/${applicantId}`]);
   }
 
+  createApplicant() {
+    this.router.navigate(['newapplicant']);
+  }
+
   accept(applicantId: string): void {
     this.applicantService.acceptApplicant(applicantId);
   }

@@ -1,10 +1,14 @@
-<div class="card border-0">
-    <div class="card-body">
+<div class="row">
+    <div class="col">
         <h3>
             Applicant request list
         </h3>
     </div>
+    <div class="col">
+        <button (click)="createApplicant()" type="button" class="btn btn-primary">Create Applicant</button>
+    </div>
 </div>
+<br>
 <div>
     <table class="table">
         <thead>
@@ -20,15 +24,14 @@
         </thead>
         <tbody>
             <tr *ngFor="let item of applicantService.applicants">
-                <td>{{item.applicantId}}</td>
-                <td>{{item.applicantName}}</td>
+                <td>{{item.id}}</td>
+                <td>{{item.fullName}}</td>
                 <td>{{item.address}}</td>
                 <td>{{item.phoneNumber}}</td>
                 <td>{{item.status}}</td>
                 <td>{{item.createDate}}</td>
                 <td>
-                    <button (click)="reviewApplicant(item.applicantId)" type="button"
-                        class="btn btn-info">Review</button>
+                    <button (click)="reviewApplicant(item.id)" type="button" class="btn btn-info">Review</button>
                     <!-- <button (click)="accept(item.applicantId)" type="button" class="btn btn-success">Accept</button>|
                     <button (click)="refuse(item.applicantId)" type="button" class="btn btn-danger">Refuse</button> -->
                 </td>
