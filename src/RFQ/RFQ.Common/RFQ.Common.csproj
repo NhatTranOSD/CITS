@@ -5,12 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Options\" />
+    <PackageReference Include="AutoMapper" Version="8.1.0" />
+    <PackageReference Include="FluentValidation" Version="8.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="8.1.0" />
-    <PackageReference Include="FluentValidation" Version="8.4.0" />
+    <Reference Include="Microsoft.Extensions.Hosting.Abstractions">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.hosting.abstractions\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
