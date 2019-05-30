@@ -13,10 +13,12 @@ namespace RFQ.Data.Context
 
         #region Entity Sets
         public DbSet<User> User { get; set; }
-     
+
+        public DbSet<Applicant> Applicant { get; set; }
+
         #endregion
 
-       
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyAllConfigurations();

@@ -11,6 +11,9 @@ namespace RFQ.Data.Context
     public interface IRFQContext
     {
         DbSet<User> User { get; set; }
+
+        DbSet<Applicant> Applicant { get; set; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

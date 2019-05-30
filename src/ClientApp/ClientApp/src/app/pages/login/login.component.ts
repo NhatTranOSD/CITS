@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { first } from 'rxjs/operators';
+import { UserLogin } from '../../models/userlogin.model';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   submitted: boolean;
   isLogin = false;
 
-  user: User = {
+  user: UserLogin = {
     userName: '',
     passWord: '',
   };

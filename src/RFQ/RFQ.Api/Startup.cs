@@ -33,6 +33,18 @@ namespace RFQ.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader();
+                                });
+            });
+
+
             // Add AutoMapper
             services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
 
@@ -40,6 +52,7 @@ namespace RFQ.Api
                options.UseSqlServer(Configuration.GetConnectionString("RFQDatabase")));
 
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IApplicantService, ApplicantService>();
 
             services.AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute))).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -57,6 +70,9 @@ namespace RFQ.Api
             {
                 app.UseHsts();
             }
+
+            app.UseCors();
+
             app.UseSwagger();
             app.UseSwaggerUi3();
 

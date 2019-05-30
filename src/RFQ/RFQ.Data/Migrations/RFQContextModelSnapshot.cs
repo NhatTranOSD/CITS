@@ -15,9 +15,39 @@ namespace RFQ.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("RFQ.Entites.Applicant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address");
+
+                    b.Property<Guid>("AgentUserId");
+
+                    b.Property<Guid>("ApplicantUserId");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime?>("DateOfBirth");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("FullName");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<int>("Status");
+
+                    b.Property<DateTime>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Applicant");
+                });
 
             modelBuilder.Entity("RFQ.Entites.User", b =>
                 {
