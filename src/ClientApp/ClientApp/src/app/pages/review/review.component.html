@@ -5,8 +5,8 @@
         <h2>Applicant Review: {{applicant.applicantId}}</h2>
     </div>
     <div class="col-8">
-        <button (click)="accept(applicant.applicantId)" type="button" class="btn btn-success">Accept</button>|
-        <button (click)="refuse(applicant.applicantId)" type="button" class="btn btn-danger">Refuse</button>
+        <button (click)="accept(applicant.id)" type="button" class="btn btn-success">Accept</button>|
+        <button (click)="refuse(applicant.id)" type="button" class="btn btn-danger">Refuse</button>
     </div>
 </div>
 <div>
@@ -51,6 +51,6 @@
 <hr>
 <h2>PDF Viewer</h2>
 
-<div class="pdf-container">
+<!-- <div class="pdf-container">
     <pdf-viewer [src]="contentUri" [original-size]="false"></pdf-viewer>
-</div>
+</div> -->

@@ -25,7 +25,7 @@ export class ReviewComponent implements OnInit {
 
     const applicantId = this.activatedRoute.snapshot.paramMap.get('id');
 
-    this.applicant = this.applicantService.getApplicantInfo(applicantId).pipe(first())
+    this.applicantService.getApplicantInfo(applicantId).pipe(first())
       .subscribe(
         data => {
           this.applicant = data;
@@ -48,22 +48,31 @@ export class ReviewComponent implements OnInit {
           console.log(data);
           // reload data
           this.applicantService.getApplicants();
+
+          alert(`Accepted ApplicantId: ${applicantId}`);
+
+          this.router.navigate(['/agent']);
         },
         error => {
           console.log(error);
         });
-
-    alert(`Accepted ApplicantId: ${applicantId}`);
-
-    this.router.navigate(['/agent']);
   }
 
   refuse(applicantId: string): void {
-    this.applicantService.refuseApplicant(applicantId);
+    this.applicantService.refuseApplicant(applicantId).pipe(first())
+      .subscribe(
+        data => {
+          console.log(data);
+          // reload data
+          this.applicantService.getApplicants();
 
-    alert(`Refused ApplicantId: ${applicantId}`);
+          alert(`Refused ApplicantId: ${applicantId}`);
 
-    this.router.navigate(['/agent']);
+          this.router.navigate(['/agent']);
+        },
+        error => {
+          console.log(error);
+        });
   }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Applicant } from '../../models/applicant.model';
 import { AuthService } from '../../services/auth.service';
 import { ApplicantService } from '../../services/applicant.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-applicant',
@@ -18,11 +19,16 @@ export class ApplicantComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.applicant = new Applicant();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-    // get ApplicantInfo
-    console.log(this.authService.getCurrentUser());
-    console.log(this.applicantService.getApplicantInfo('userId'));
+    this.applicantService.getApplicantInfoByUserId(currentUser.id).pipe(first())
+      .subscribe(
+        data => {
+          this.applicant = data;
+        },
+        error => {
+          console.log(error);
+        });
   }
 
   fileChange(event) {

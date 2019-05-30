@@ -10,6 +10,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using RFQ.Entites;
 using System.Threading;
+using RFQ.Common.Enums;
 
 namespace RFQ.Service.Services
 {
@@ -49,6 +50,13 @@ namespace RFQ.Service.Services
             return _mapper.Map<ApplicantResponse>(data);
         }
 
+        public async Task<ApplicantResponse> ApplicantInfoByUserId(string userId)
+        {
+            var data = await _context.Applicant.SingleOrDefaultAsync(x => x.ApplicantUserId.ToString() == userId);
+
+            return _mapper.Map<ApplicantResponse>(data);
+        }
+
         public Task<bool> UploadFile(string applicantId)
         {
             return null;
@@ -62,6 +70,7 @@ namespace RFQ.Service.Services
         public async Task<bool> AcceptApplicant(string applicantId)
         {
             var applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantId);
+            applicant.Status = ApplicantStatus.Agent_Reviewed;
 
             await ChangeStatusApplicant(applicant);
 
@@ -71,6 +80,7 @@ namespace RFQ.Service.Services
         public async Task<bool> RefuseApplicant(string applicantId)
         {
             var applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantId);
+            applicant.Status = ApplicantStatus.Agent_Decilined;
 
             await ChangeStatusApplicant(applicant);
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RFQ.Entites;
 using RFQ.Service.Interface;
 using RFQ.Service.Models.Reponses;
 using RFQ.Service.Models.Request;
@@ -31,11 +32,11 @@ namespace RFQ.Api.Controllers
             return Ok(result);
         }
 
-        [Route("{agentId}")]
+        [Route("{agentId}/Create")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ApplicantResponse>> CreateApplicant(string agentId, ApplicantRequest applicantRequest)
+        public async Task<ActionResult<ApplicantResponse>> CreateApplicant(string agentId, string email)
         {
             var result = await _applicantService.CreateApplicant(agentId);
             return Ok(result);
@@ -48,6 +49,16 @@ namespace RFQ.Api.Controllers
         public async Task<ActionResult<ApplicantResponse>> ApplicantInfo(string Id)
         {
             var result = await _applicantService.ApplicantInfoAsync(Id);
+            return Ok(result);
+        }
+
+        [Route("ApplicantInfoByUserId/{id}")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApplicantResponse>> ApplicantInfoByUserId(string Id)
+        {
+            var result = await _applicantService.ApplicantInfoByUserId(Id);
             return Ok(result);
         }
 

@@ -14,6 +14,8 @@ namespace RFQ.Service.Interface
 
         Task<ApplicantResponse> ApplicantInfoAsync(string applicantId);
 
+        Task<ApplicantResponse> ApplicantInfoByUserId(string userId);
+
         Task<bool> UploadFile(string applicantId); // Consider fileContent
 
         Task<string> GetContent(string applicantId); // return content Url

@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { ApplicantRequest } from '../models/applicant-request.model';
 
 import { environment } from '../../environments/environment';
 
@@ -36,8 +37,12 @@ export class ApplicantService {
       }, error => console.error(error));
   }
 
-  public getApplicantInfo(userId: string): any {
-    return this.http.post<Applicant>(`${baseUrl}api/v1/Applicant/${userId}`, httpOptions).pipe(map(result => result));
+  public getApplicantInfo(applicantId: string): any {
+    return this.http.post<Applicant>(`${baseUrl}api/v1/Applicant/${applicantId}`, httpOptions).pipe(map(result => result));
+  }
+
+  public getApplicantInfoByUserId(userId: string): any {
+    return this.http.post<Applicant>(`${baseUrl}api/v1/Applicant/ApplicantInfoByUserId/${userId}`, httpOptions).pipe(map(result => result));
   }
 
   public uploadFiles(formData: FormData): any {
@@ -56,21 +61,19 @@ export class ApplicantService {
 
   public acceptApplicant(applicantId: string): any {
 
-    return this.http.post<Applicant>(`${baseUrl}api/v1/Applicant/accept/${applicantId}`, httpOptions).pipe(map(result => result));
+    return this.http.post<boolean>(`${baseUrl}api/v1/Applicant/${applicantId}/accept`, httpOptions).pipe(map(result => result));
   }
 
   public refuseApplicant(applicantId: string): any {
-
-    // return this.http.post<User>(`${baseUrl}api/v1/Auth/login`, user, httpOptions).pipe(map(result => { return result }));
-
-    return true;
+    return this.http.post<boolean>(`${baseUrl}api/v1/Applicant/${applicantId}/refuse`, httpOptions).pipe(map(result => result));
   }
 
-  public createApplicant(email: string): any {
+  public createApplicant(applicantRequest: ApplicantRequest): any {
 
-    // return this.http.post<User>(`${baseUrl}api/v1/Auth/login`, user, httpOptions).pipe(map(result => { return result }));
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    applicantRequest.agentId = currentUser.id;
 
-    return true;
+    return this.http.post<Applicant>(`${baseUrl}api/v1/Auth/login`, applicantRequest, httpOptions).pipe(map(result => result));
   }
 
 }

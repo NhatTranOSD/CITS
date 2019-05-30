@@ -36,6 +36,8 @@ namespace RFQ.Data.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("Email");
+
                     b.Property<string>("FullName");
 
                     b.Property<string>("PhoneNumber");
