@@ -11,7 +11,7 @@ export class AppComponent {
   title = 'ClientApp';
   isLoading = true;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, private router: Router) {
     // localStorage.clear();
     this.isLogin();
   }

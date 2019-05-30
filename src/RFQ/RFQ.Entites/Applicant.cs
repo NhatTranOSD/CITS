@@ -1,4 +1,5 @@
-﻿using RFQ.Common.Enums;
+﻿using AutoMapper;
+using RFQ.Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;

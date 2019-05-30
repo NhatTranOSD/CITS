@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicantService } from '../../services/applicant.service';
 import { MessageService } from '../../services/message.service';
-import { Applicant } from '../../models/applicant.model';
+import { Applicant, ApplicantStatusDisplay } from '../../models/applicant.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
@@ -13,6 +13,8 @@ import { first } from 'rxjs/operators';
 export class ReviewComponent implements OnInit {
 
   applicant: Applicant;
+
+  applicantStatusDisplay: string[] = ApplicantStatusDisplay;
 
   contentUri = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
 
@@ -34,7 +36,7 @@ export class ReviewComponent implements OnInit {
           console.log(error);
         });
 
-    this.getContents();
+    // this.getContents();
   }
 
   getContents(): void {

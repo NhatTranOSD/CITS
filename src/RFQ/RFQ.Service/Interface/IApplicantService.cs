@@ -1,4 +1,6 @@
-﻿using RFQ.Service.Models.Reponses;
+﻿using RFQ.Entites;
+using RFQ.Service.Models.Reponses;
+using RFQ.Service.Models.Request;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +12,9 @@ namespace RFQ.Service.Interface
     {
         Task<IEnumerable<ApplicantResponse>> Applicants(string agentId);
 
-        Task<ApplicantResponse> CreateApplicant(string agentId);
+        Task<ApplicantResponse> CreateApplicantAsync(ApplicantCreateRequest createRequest);
+
+        Task<ApplicantResponse> UpdateApplicantAsync(ApplicantUpdateRequest applicant);
 
         Task<ApplicantResponse> ApplicantInfoAsync(string applicantId);
 

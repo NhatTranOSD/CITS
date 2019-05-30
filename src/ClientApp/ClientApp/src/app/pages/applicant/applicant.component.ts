@@ -43,8 +43,17 @@ export class ApplicantComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
+    this.applicantService.updateApplicant(this.applicant).pipe(first())
+      .subscribe(
+        data => {
+          console.log(data);
+          this.submitted = true;
+        },
+        error => {
+          console.log(error);
+        });
 
     this.applicantService.uploadFiles(this.formData);
+
   }
 }

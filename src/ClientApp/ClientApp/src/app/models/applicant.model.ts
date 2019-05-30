@@ -20,3 +20,13 @@ export enum ApplicantStatus {
     Agent_Decilined = 5,
     Agent_Approved = 6,
 }
+
+export const ApplicantStatusDisplay = [
+    'New',
+    'Applicant_Review',
+    'Applicant_Completed',
+    'Agent_Review',
+    'Agent_Reviewed',
+    'Agent_Decilined',
+    'Agent_Approved'
+];

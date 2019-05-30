@@ -22,7 +22,12 @@ export class ApplicantService {
   public applicants: Applicant[];
 
   constructor(private http: HttpClient) {
-    this.getApplicants();
+
+    const isLogin = JSON.parse(localStorage.getItem('isLogin'));
+
+    if (isLogin === true) {
+      this.getApplicants();
+    }
   }
 
   public async getApplicants() {
@@ -73,7 +78,11 @@ export class ApplicantService {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     applicantRequest.agentId = currentUser.id;
 
-    return this.http.post<Applicant>(`${baseUrl}api/v1/Auth/login`, applicantRequest, httpOptions).pipe(map(result => result));
+    return this.http.post<Applicant>(`${baseUrl}api/v1/Applicant/Create`, applicantRequest, httpOptions).pipe(map(result => result));
+  }
+
+  public updateApplicant(applicantRequest: Applicant): any {
+    return this.http.post<Applicant>(`${baseUrl}api/v1/Applicant/Update`, applicantRequest, httpOptions).pipe(map(result => result));
   }
 
 }

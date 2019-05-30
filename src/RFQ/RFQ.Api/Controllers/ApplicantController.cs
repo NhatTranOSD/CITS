@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RFQ.Entites;
@@ -32,13 +33,23 @@ namespace RFQ.Api.Controllers
             return Ok(result);
         }
 
-        [Route("{agentId}/Create")]
+        [Route("Create")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ApplicantResponse>> CreateApplicant(string agentId, string email)
+        public async Task<ActionResult<ApplicantResponse>> CreateApplicant(ApplicantCreateRequest applicant)
         {
-            var result = await _applicantService.CreateApplicant(agentId);
+            var result = await _applicantService.CreateApplicantAsync(applicant);
+            return Ok(result);
+        }
+
+        [Route("Update")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApplicantResponse>> UpdateApplicant(ApplicantUpdateRequest applicant)
+        {
+            var result = await _applicantService.UpdateApplicantAsync(applicant);
             return Ok(result);
         }
 

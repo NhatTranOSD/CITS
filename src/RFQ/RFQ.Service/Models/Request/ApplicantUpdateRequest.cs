@@ -1,12 +1,14 @@
-﻿using System;
+﻿using AutoMapper;
+using RFQ.Entites;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace RFQ.Service.Models.Request
 {
-    public class ApplicantRequest
+    public class ApplicantUpdateRequest
     {
-        public string ApplicantId { get; set; }
+        public string Id { get; set; }
 
         public int Status { get; set; }
 

@@ -14,8 +14,10 @@ import { UserLogin } from '../../models/userlogin.model';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  submitted: boolean;
   isLogin = false;
+  isLoading = true;
+  loginStatus = '';
+  submitted = false;
 
   user: UserLogin = {
     userName: '',
@@ -33,28 +35,38 @@ export class LoginComponent implements OnInit {
     if (this.authService.checkLogin) {
       this.authService.logout();
     }
+
+    this.isLoading = false;
   }
 
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
   onSubmit() {
-    this.submitted = true;
+    this.loginStatus = '';
     this.user.userName = this.f.username.value;
     this.user.passWord = this.f.password.value;
 
-    this.authService.login(this.user).pipe(first())
-      .subscribe(
-        data => {
-          this.isLogin = true;
+    if (this.user.userName !== '' && this.user.passWord !== '') {
+      this.authService.login(this.user).pipe(first())
+        .subscribe(
+          data => {
+            if (data !== null) {
+              this.isLogin = true;
 
-          localStorage.setItem('isLogin', JSON.stringify(this.isLogin));
-          localStorage.setItem('currentUser', JSON.stringify(data));
+              localStorage.setItem('isLogin', JSON.stringify(this.isLogin));
+              localStorage.setItem('currentUser', JSON.stringify(data));
 
-          this.authService.directUser(data);
-        },
-        error => {
-          console.log(error);
-        });
+              this.authService.directUser(data);
+            } else {
+              this.loginStatus = 'Invalid username or password';
+            }
+          },
+          error => {
+            console.log(error);
+          });
+    }
+
+    this.submitted = true;
   }
 }

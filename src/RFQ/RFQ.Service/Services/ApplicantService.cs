@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using RFQ.Entites;
 using System.Threading;
 using RFQ.Common.Enums;
+using RFQ.Service.Models.Request;
 
 namespace RFQ.Service.Services
 {
@@ -32,15 +33,43 @@ namespace RFQ.Service.Services
             return _mapper.Map<IEnumerable<ApplicantResponse>>(data);
         }
 
-        public Task<ApplicantResponse> CreateApplicant(string agentId)
+        public async Task<ApplicantResponse> CreateApplicantAsync(ApplicantCreateRequest applicantCreateRequest)
         {
-            return null;
+            User user = new User() { Id = Guid.NewGuid(), UserName = applicantCreateRequest.Email, PassWord = "123456", UserType = UserType.Applicant };
+
+            Applicant applicant = new Applicant()
+            {
+                Id = Guid.NewGuid(),
+                Email = applicantCreateRequest.Email,
+                AgentUserId = Guid.Parse(applicantCreateRequest.AgentId),
+                ApplicantUserId = user.Id,
+                CreatedDate = DateTime.UtcNow,
+                UpdatedDate = DateTime.UtcNow,
+                FullName = applicantCreateRequest.FullName,
+                Status = ApplicantStatus.New,
+            };
+
+            await _context.User.AddAsync(user);
+
+            await _context.Applicant.AddAsync(applicant);
+
+            await _context.SaveChangesAsync(CancellationToken.None);
+
+            return _mapper.Map<ApplicantResponse>(applicant);
         }
 
-        public async Task<ApplicantResponse> CreateApplicantAsync(Applicant applicant)
+        public async Task<ApplicantResponse> UpdateApplicantAsync(ApplicantUpdateRequest applicantRequest)
         {
-            var data = await _context.Applicant.AddAsync(applicant);
-            return _mapper.Map<ApplicantResponse>(data);
+            Applicant applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantRequest.Id);
+
+            applicant.Address = applicantRequest.Address;
+            applicant.FullName = applicantRequest.FullName;
+            applicant.PhoneNumber = applicantRequest.PhoneNumber;
+            applicant.Description = applicantRequest.Description;
+
+            await _context.SaveChangesAsync(CancellationToken.None);
+
+            return _mapper.Map<ApplicantResponse>(applicant);
         }
 
         public async Task<ApplicantResponse> ApplicantInfoAsync(string applicantId)

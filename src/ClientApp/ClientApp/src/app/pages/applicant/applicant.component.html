@@ -1,7 +1,11 @@
+<div *ngIf="submitted">
+    Submitted successfully!
+</div>
+
 <div class="container">
     <div *ngIf="applicant" class="col-5" [hidden]="submitted">
         <h1>Applicant Form</h1>
-        <form (ngSubmit)="onSubmit()" #applicantForm="ngForm">
+        <form #applicantForm="ngForm">
 
             <div class="form-group">
                 <label for="applicantName">Email</label>
@@ -43,15 +47,14 @@
                             </div> -->
             </div>
 
-
             <div class="form-group">
                 <label>Attach file</label>
                 <input (change)="fileChange($event)" type="file" class="form-control-file" accept=".pdf">
             </div>
 
-            <button type="submit" class="btn btn-success" [disabled]="!applicantForm.form.valid">Submit</button>
+            <button (click)="onSubmit()" class="btn btn-success" [disabled]="!applicantForm.form.valid">Submit</button>
             <!-- <button type="button" class="btn btn-default" (click)="newHero(); applicantForm.reset()">New Hero</button> -->
         </form>
     </div>
 </div>
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->

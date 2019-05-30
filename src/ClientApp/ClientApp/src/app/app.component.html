@@ -11,7 +11,7 @@
         </div>
     </div>
 </div>
-<div class="container">
+<div *ngIf="!isLoading" class="container">
     <router-outlet></router-outlet>
     <hr>
     <app-message></app-message>
