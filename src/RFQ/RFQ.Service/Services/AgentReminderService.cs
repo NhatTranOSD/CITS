@@ -27,10 +27,13 @@ namespace RFQ.Service.Services
             }
         }
 
-        private void ProcessReminder()
+        private void ProcessReminder(CancellationToken cancellationToken)
         {
 
         }
+
+       
+
 
 
     }

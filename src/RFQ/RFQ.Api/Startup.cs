@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+//using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RFQ.Api.Filters;
@@ -18,6 +20,7 @@ using RFQ.Common.AutoMapper;
 using RFQ.Data.Context;
 using RFQ.Service.Interface;
 using RFQ.Service.Services;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace RFQ.Api
 {
@@ -51,8 +54,11 @@ namespace RFQ.Api
             services.AddDbContext<IRFQContext, RFQContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("RFQDatabase")));
 
+            services.AddSingleton<IHostedService, AgentReminderService>();
+
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IApplicantService, ApplicantService>();
+            services.AddTransient<IEmailService, EmailService>();
 
             services.AddMvc(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute))).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

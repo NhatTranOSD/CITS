@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using RFQ.Common.Settings;
+using RFQ.Service.Interface;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RFQ.Service.Services
 {
-    public class EmailService
+    public class EmailService : IEmailService
     {
         private EmailSettings _settings;
         public EmailService(IOptions<EmailSettings> settings)
