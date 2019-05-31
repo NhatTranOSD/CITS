@@ -19,11 +19,12 @@ namespace RFQ.Service.Services
     {
         private readonly IRFQContext _context;
         private readonly IMapper _mapper;
-
-        public ApplicantService(IRFQContext context, IMapper mapper)
+        private readonly IEmailService _emailService;
+        public ApplicantService(IRFQContext context, IMapper mapper, IEmailService emailService)
         {
             _context = context;
             _mapper = mapper;
+            _emailService = emailService;
         }
 
         public async Task<IEnumerable<ApplicantResponse>> Applicants(string agentId)
@@ -35,7 +36,8 @@ namespace RFQ.Service.Services
 
         public async Task<ApplicantResponse> CreateApplicantAsync(ApplicantCreateRequest applicantCreateRequest)
         {
-            User user = new User() { Id = Guid.NewGuid(), UserName = applicantCreateRequest.Email, PassWord = "123456", UserType = UserType.Applicant };
+            var passWord = "123456";
+            User user = new User() { Id = Guid.NewGuid(), UserName = applicantCreateRequest.Email, PassWord = passWord, UserType = UserType.Applicant };
 
             Applicant applicant = new Applicant()
             {
@@ -55,6 +57,7 @@ namespace RFQ.Service.Services
 
             await _context.SaveChangesAsync(CancellationToken.None);
 
+            await _emailService.EmailApplicant(applicantCreateRequest.Email, passWord);
             return _mapper.Map<ApplicantResponse>(applicant);
         }
 
