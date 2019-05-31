@@ -36,6 +36,11 @@ namespace RFQ.Service.Services
 
         public async Task<ApplicantResponse> CreateApplicantAsync(ApplicantCreateRequest applicantCreateRequest)
         {
+            bool valid = UserNameValid(applicantCreateRequest.Email);
+
+            if (!valid)
+                return null;
+
             var passWord = "123456";
             User user = new User() { Id = Guid.NewGuid(), UserName = applicantCreateRequest.Email, PassWord = passWord, UserType = UserType.Applicant };
 
@@ -61,6 +66,13 @@ namespace RFQ.Service.Services
             return _mapper.Map<ApplicantResponse>(applicant);
         }
 
+        private bool UserNameValid(string userName)
+        {
+            var used = _context.User.SingleOrDefault(x => x.UserName == userName);
+
+            return (used != null) ? false : true;
+        }
+
         public async Task<ApplicantResponse> UpdateApplicantAsync(ApplicantUpdateRequest applicantRequest)
         {
             Applicant applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantRequest.Id);
@@ -80,7 +92,10 @@ namespace RFQ.Service.Services
         {
             var applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantId);
 
-            await ChangeStatusApplicant(applicant, ApplicantStatus.Agent_Reviewed);
+            if (applicant.Status < ApplicantStatus.Agent_Declined)
+            {
+                await ChangeStatusApplicant(applicant, ApplicantStatus.Agent_Reviewed);
+            }
 
             return _mapper.Map<ApplicantResponse>(applicant);
         }
@@ -135,7 +150,7 @@ namespace RFQ.Service.Services
         {
             var applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantId);
 
-            await ChangeStatusApplicant(applicant, ApplicantStatus.Agent_Decilined);
+            await ChangeStatusApplicant(applicant, ApplicantStatus.Agent_Declined);
 
             await _emailService.EmailAgentReject(applicant.Email);
 

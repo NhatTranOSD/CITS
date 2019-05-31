@@ -27,11 +27,6 @@ namespace RFQ.Service.Services
         {
             var data = await _context.User.FirstOrDefaultAsync(x => x.UserName == model.UserName && x.PassWord == model.PassWord);
 
-            //if (data == null)
-            //{
-            //    throw new NotFoundException(nameof(User), Guid.NewGuid());
-            //}
-
             return _mapper.Map<UserReponse>(data);
            
         }

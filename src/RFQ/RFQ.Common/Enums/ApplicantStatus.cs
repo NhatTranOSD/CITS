@@ -12,7 +12,7 @@ namespace RFQ.Common.Enums
         Agent_Review = 3,
         Agent_Review_Reminder = 4,
         Agent_Reviewed = 5,
-        Agent_Decilined = 6,
+        Agent_Declined = 6,
         Agent_Approved = 7,
     }
 }

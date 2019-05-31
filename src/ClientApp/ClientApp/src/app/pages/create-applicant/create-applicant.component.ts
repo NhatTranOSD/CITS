@@ -13,6 +13,7 @@ export class CreateApplicantComponent implements OnInit {
 
   applicantRequest: ApplicantRequest = new ApplicantRequest();
   canSubmit = true;
+  errMessage: string;
 
   constructor(private applicantService: ApplicantService, private router: Router) { }
 
@@ -31,12 +32,17 @@ export class CreateApplicantComponent implements OnInit {
     this.applicantService.createApplicant(this.applicantRequest).pipe(first())
       .subscribe(
         data => {
-          alert('Created');
+          if (data != null) {
+            alert('Created');
 
-          // Reload Data
-          this.applicantService.getApplicants();
+            // Reload Data
+            this.applicantService.getApplicants();
 
-          this.router.navigate(['/agent']);
+            this.router.navigate(['/agent']);
+          } else {
+            this.errMessage = 'The email is registered';
+          }
+
         },
         error => {
           console.log(error);

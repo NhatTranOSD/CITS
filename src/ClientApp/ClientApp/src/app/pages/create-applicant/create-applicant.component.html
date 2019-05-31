@@ -10,6 +10,7 @@
     <div class="form-group">
         <label for="email">Email address:</label>
         <input [(ngModel)]="applicantRequest.email" type="email" (ngModelChange)="emailInputChange()" class="form-control" id="email">
+        <label class="text-danger" *ngIf="errMessage != null" for="email">{{errMessage}}</label>
     </div>
 
     <button [disabled]="canSubmit" (click)='onSubmit()' type="submit" class="btn btn-primary">Submit</button>
