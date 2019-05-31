@@ -55,7 +55,7 @@ namespace RFQ.Api
             services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
 
             services.AddDbContext<IRFQContext, RFQContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("RFQDatabase")));
+               options.UseSqlServer(Configuration.GetConnectionString("RFQDatabase")),ServiceLifetime.Transient);
 
             //services.AddSingleton<IHostedService, AgentReminderService>();
 
