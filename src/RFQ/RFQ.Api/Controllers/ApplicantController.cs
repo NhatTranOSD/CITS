@@ -12,6 +12,7 @@ using RFQ.Service.Interface;
 using RFQ.Service.Models.Reponses;
 using RFQ.Service.Models.Request;
 using RFQ.Common;
+using Microsoft.AspNetCore.Hosting;
 
 namespace RFQ.Api.Controllers
 {
@@ -20,10 +21,12 @@ namespace RFQ.Api.Controllers
     public class ApplicantController : ControllerBase
     {
         private readonly IApplicantService _applicantService;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ApplicantController(IApplicantService applicantService)
+        public ApplicantController(IApplicantService applicantService, IHostingEnvironment hostingEnvironment)
         {
             _applicantService = applicantService;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [Route("{agentId}")]
@@ -89,7 +92,7 @@ namespace RFQ.Api.Controllers
 
                 if (file != null)
                 {
-                    filePath = FileExtentions.SaveFile(file);
+                    filePath = FileExtentions.SaveFile(file, _hostingEnvironment.WebRootPath);
                 }
 
                 if (!string.IsNullOrEmpty(filePath) && !string.IsNullOrEmpty(Id))
@@ -120,7 +123,7 @@ namespace RFQ.Api.Controllers
 
                 if (contentPath != null)
                 {
-                    FileStream file = FileExtentions.DownloadFile(contentPath);
+                    FileStream file = FileExtentions.DownloadFile(contentPath, _hostingEnvironment.WebRootPath);
 
                     var memory = new MemoryStream();
 

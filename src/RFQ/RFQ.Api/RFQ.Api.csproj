@@ -8,7 +8,8 @@
 
   <ItemGroup>
     <Folder Include="StaticFiles\files\" />
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\NewFolder\" />
+    <Folder Include="wwwroot\StaticFiles\files\" />
   </ItemGroup>
 
   <ItemGroup>
