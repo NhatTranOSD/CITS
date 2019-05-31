@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,11 +8,22 @@ using System.Text;
 
 namespace RFQ.Common
 {
-    public static class FileExtentions
+    public class FileExtentions
     {
+        private static IHostingEnvironment _environment;
+
         private static string folderName = Path.Combine("StaticFiles", "files");
-        private static string pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-        private static string currentDirectory = Directory.GetCurrentDirectory();
+        private static string currentDirectory;
+        private static string pathToSave;       
+
+        public FileExtentions(IHostingEnvironment environment)
+        {
+            _environment = environment;
+
+            currentDirectory = _environment.ContentRootPath;
+
+            pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+        }
         public static string SaveFile(IFormFile file)
         {
             if (file != null)
