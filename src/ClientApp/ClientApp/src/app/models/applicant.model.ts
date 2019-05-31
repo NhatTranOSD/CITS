@@ -5,6 +5,7 @@ export class Applicant {
     address: string;
     phoneNumber?: string;
     description?: string;
+    documentPath: string;
     status: ApplicantStatus;
     dateOfBirth?: string;
     createdDate: string;

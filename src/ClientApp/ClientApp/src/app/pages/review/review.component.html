@@ -51,7 +51,8 @@
     </div>
     <h2>Content</h2>
     <hr>
-    <h2>PDF Viewer</h2>
+    <h2>Documents</h2>
+    <a *ngIf="documentLink" href="{{documentLink}}">{{applicant.documentPath}}</a>
 
     <!-- <div class="pdf-container">
     <pdf-viewer [src]="contentUri" [original-size]="false"></pdf-viewer>

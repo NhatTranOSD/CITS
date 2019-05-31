@@ -50,6 +50,7 @@
             <div class="form-group">
                 <label>Attach file</label>
                 <input (change)="fileChange($event)" type="file" class="form-control-file" accept=".pdf">
+                <a *ngIf="documentLink" href="{{documentLink}}">{{applicant.documentPath}}</a>
             </div>
 
             <button (click)="onSubmit()" class="btn btn-success" [disabled]="!applicantForm.form.valid">Submit</button>

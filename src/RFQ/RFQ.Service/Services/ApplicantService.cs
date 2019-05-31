@@ -102,8 +102,15 @@ namespace RFQ.Service.Services
             return true;
         }
 
-        public Task<string> GetContent(string applicantId)
+        public async Task<string> GetContent(string applicantId)
         {
+            var applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantId);
+
+            if (applicant != null)
+            {
+                return applicant.DocumentPath;
+            }
+
             return null;
         }
 

@@ -60,9 +60,8 @@ export class ApplicantService {
 
   public getContents(applicantId: string): any {
 
-    // return this.http.post<User>(`${baseUrl}api/v1/Auth/login`, user, httpOptions).pipe(map(result => { return result }));
-
-    return null;
+    return this.http.get<any>(`${baseUrl}api/v1/Applicant/${applicantId}/Content`)
+      .pipe(map(result => result));
   }
 
   public acceptApplicant(applicantId: string): any {
