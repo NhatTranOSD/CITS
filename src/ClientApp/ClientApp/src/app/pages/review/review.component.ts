@@ -4,6 +4,7 @@ import { MessageService } from '../../services/message.service';
 import { Applicant, ApplicantStatusDisplay } from '../../models/applicant.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-review',
@@ -13,10 +14,11 @@ import { first } from 'rxjs/operators';
 export class ReviewComponent implements OnInit {
 
   applicant: Applicant;
+  documentLink: string;
 
   applicantStatusDisplay: string[] = ApplicantStatusDisplay;
 
-  contentUri = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
+  contentUri = '';
 
   constructor(private messageService: MessageService,
               private router: Router,
@@ -24,23 +26,20 @@ export class ReviewComponent implements OnInit {
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-
     const applicantId = this.activatedRoute.snapshot.paramMap.get('id');
 
     this.applicantService.getApplicantInfo(applicantId).pipe(first())
       .subscribe(
         data => {
           this.applicant = data;
+
+          if (this.applicant.documentPath !== null) {
+            this.documentLink = `${environment.apiUrl}api/v1/Applicant/${this.applicant.id}/Content`;
+          }
         },
         error => {
           console.log(error);
         });
-
-    // this.getContents();
-  }
-
-  getContents(): void {
-    this.applicantService.getContents(this.applicant.id);
   }
 
   accept(applicantId: string): void {

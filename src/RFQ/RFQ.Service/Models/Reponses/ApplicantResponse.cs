@@ -23,6 +23,8 @@ namespace RFQ.Service.Models.Reponses
 
         public string Description { get; set; }
 
+        public string DocumentPath { get; set; }
+
         public DateTime? DateOfBirth { get; set; }
 
         public DateTime CreatedDate { get; set; }

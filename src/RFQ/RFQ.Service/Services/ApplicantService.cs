@@ -57,7 +57,7 @@ namespace RFQ.Service.Services
 
             await _context.SaveChangesAsync(CancellationToken.None);
 
-            await _emailService.EmailApplicant(applicantCreateRequest.Email, passWord);
+            // await _emailService.EmailApplicant(applicantCreateRequest.Email, passWord);
             return _mapper.Map<ApplicantResponse>(applicant);
         }
 
@@ -89,13 +89,28 @@ namespace RFQ.Service.Services
             return _mapper.Map<ApplicantResponse>(data);
         }
 
-        public Task<bool> UploadFile(string applicantId, string filePath)
+        public async Task<bool> UploadFile(string applicantId, string filePath)
         {
-            return null;
+            Applicant applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantId);
+
+            applicant.DocumentPath = filePath;
+
+            _context.Applicant.Update(applicant);
+
+            await _context.SaveChangesAsync(CancellationToken.None);
+
+            return true;
         }
 
-        public Task<string> GetContent(string applicantId)
+        public async Task<string> GetContent(string applicantId)
         {
+            var applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantId);
+
+            if (applicant != null)
+            {
+                return applicant.DocumentPath;
+            }
+
             return null;
         }
 

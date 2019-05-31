@@ -11,7 +11,7 @@ using RFQ.Entites;
 using RFQ.Service.Interface;
 using RFQ.Service.Models.Reponses;
 using RFQ.Service.Models.Request;
-using RFQ.Common.FileSaving;
+using RFQ.Common;
 
 namespace RFQ.Api.Controllers
 {
@@ -89,12 +89,12 @@ namespace RFQ.Api.Controllers
 
                 if (file != null)
                 {
-                    filePath = FileSaving.SaveFile(file);
+                    filePath = FileExtentions.SaveFile(file);
                 }
 
-                if (string.IsNullOrEmpty(filePath) && string.IsNullOrEmpty(Id))
+                if (!string.IsNullOrEmpty(filePath) && !string.IsNullOrEmpty(Id))
                 {
-                    await _applicantService.UploadFile(Id , filePath);
+                    await _applicantService.UploadFile(Id, filePath);
                 }
 
                 return Ok("All the files are successfully uploaded.");
@@ -109,13 +109,33 @@ namespace RFQ.Api.Controllers
         }
 
         [Route("{Id}/Content")]
-        [HttpPost]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<bool>> GetContent(string Id)
+        public async Task<ActionResult> GetContent(string Id)
         {
-            var result = await _applicantService.GetContent(Id);
-            return Ok(result);
+            try
+            {
+                string contentPath = await _applicantService.GetContent(Id);
+
+                if (contentPath != null)
+                {
+                    FileStream file = FileExtentions.DownloadFile(contentPath);
+
+                    var memory = new MemoryStream();
+
+                    await file.CopyToAsync(memory);
+
+                    memory.Position = 0;
+                    return File(memory, FileExtentions.GetMimeType(contentPath), Path.GetFileName(contentPath));
+                }
+            }
+            catch
+            {
+
+            }
+
+            return BadRequest();
         }
 
         [Route("{Id}/Accept")]

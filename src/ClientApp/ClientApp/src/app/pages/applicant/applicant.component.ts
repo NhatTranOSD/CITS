@@ -3,6 +3,7 @@ import { Applicant } from '../../models/applicant.model';
 import { AuthService } from '../../services/auth.service';
 import { ApplicantService } from '../../services/applicant.service';
 import { first } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-applicant',
@@ -14,6 +15,7 @@ export class ApplicantComponent implements OnInit {
   applicant: Applicant;
   submitted = false;
   formData: FormData;
+  documentLink: string;
 
   constructor(private authService: AuthService, private applicantService: ApplicantService) {
   }
@@ -25,6 +27,11 @@ export class ApplicantComponent implements OnInit {
       .subscribe(
         data => {
           this.applicant = data;
+
+          if (this.applicant.documentPath !== null) {
+            this.documentLink = `${environment.apiUrl}api/v1/Applicant/${this.applicant.id}/Content`;
+          }
+
         },
         error => {
           console.log(error);
@@ -42,11 +49,15 @@ export class ApplicantComponent implements OnInit {
     }
   }
 
+  back(): void {
+    this.submitted = false;
+    this.ngOnInit();
+  }
+
   onSubmit() {
     this.applicantService.updateApplicant(this.applicant).pipe(first())
       .subscribe(
         data => {
-          console.log(data);
           this.submitted = true;
         },
         error => {
@@ -57,7 +68,6 @@ export class ApplicantComponent implements OnInit {
       this.applicantService.uploadFiles(this.applicant.id, this.formData).pipe(first())
         .subscribe(
           data => {
-            console.log(data);
             this.submitted = true;
           },
           error => {
