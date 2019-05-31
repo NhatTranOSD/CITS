@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using RFQ.Common.Constants;
 using RFQ.Common.Settings;
 using RFQ.Service.Interface;
 using System;
@@ -18,7 +19,25 @@ namespace RFQ.Service.Services
             _settings = settings.Value;
         }
 
-        public async Task SendEmail(string email, string subject, string message)
+
+        public async Task EmailApplicant(string email, string password)
+        {
+            var contentEmail = string.Format(EmailConstants.EMAIL_APPLICANT_CREATE_Content, password);
+
+            await SendEmail(email, EmailConstants.EMAIL_APPLICANT_CREATE_Subject, contentEmail);
+        }
+
+        public async Task EmailAgentReviewer(string email)
+        {
+            await SendEmail(email, EmailConstants.Email_Agent_Review_Subject, EmailConstants.Email_Agent_Review);
+        }
+
+        public async Task EmailAgentReviewerReminder(string email)
+        {
+            await SendEmail(email, EmailConstants.Email_Agent_Review_Reminder_Subject, EmailConstants.Email_Agent_Review_Reminder);
+        }
+
+        private async Task SendEmail(string email, string subject, string message)
         {
             using (var client = new SmtpClient())
             {

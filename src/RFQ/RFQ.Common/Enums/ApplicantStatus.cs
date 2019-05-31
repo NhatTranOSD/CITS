@@ -10,6 +10,7 @@ namespace RFQ.Common.Enums
         Applicant_Review,
         Applicant_Completed,
         Agent_Review,
+        Agent_Review_Reminder,
         Agent_Reviewed,
         Agent_Decilined,
         Agent_Approved
