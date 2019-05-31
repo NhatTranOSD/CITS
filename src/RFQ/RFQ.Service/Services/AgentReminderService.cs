@@ -15,7 +15,7 @@ namespace RFQ.Service.Services
     public class AgentReminderService : HostedService
     {
         private readonly IEmailService _emailService;
-       // private readonly IRFQContext _context;
+        // private readonly IRFQContext _context;
         private readonly IServiceScopeFactory serviceScopeFactory;
         public AgentReminderService(IEmailService emailService, IServiceScopeFactory serviceScopeFactory)
         {
@@ -40,9 +40,10 @@ namespace RFQ.Service.Services
                 var _context = scope.ServiceProvider.GetService<IRFQContext>();
 
                 DbFunctions dfunc = null;
-                var dateNow = DateTime.Now;
+                var dateNow = DateTime.UtcNow;
 
-                var applicants = await _context.Applicant.Where(x => x.Status == Common.Enums.ApplicantStatus.Applicant_Review && SqlServerDbFunctionsExtensions.DateDiffMinute(dfunc, Convert.ToDateTime(dateNow), Convert.ToDateTime(x.UpdatedDate)) >= 5).ToListAsync();
+                var applicants = await _context.Applicant.Where(x => x.Status == Common.Enums.ApplicantStatus.Applicant_Completed
+                && SqlServerDbFunctionsExtensions.DateDiffMinute(dfunc, x.UpdatedDate, dateNow) >= 1).ToListAsync();
 
                 if (applicants.Any())
                 {
@@ -59,7 +60,7 @@ namespace RFQ.Service.Services
                 }
             }
 
-           
+
         }
     }
 }

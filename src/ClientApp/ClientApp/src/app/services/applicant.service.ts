@@ -23,11 +23,11 @@ export class ApplicantService {
 
   constructor(private http: HttpClient) {
 
-    const isLogin = JSON.parse(localStorage.getItem('isLogin'));
+    // const isLogin = JSON.parse(localStorage.getItem('isLogin'));
 
-    if (isLogin === true) {
-      this.getApplicants();
-    }
+    // if (isLogin === true) {
+    //   this.getApplicants();
+    // }
   }
 
   public async getApplicants() {

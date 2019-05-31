@@ -13,7 +13,7 @@ export class AgentComponent implements OnInit {
   public applicantStatusDisplay: string[] = ApplicantStatusDisplay;
 
   constructor(public applicantService: ApplicantService, private router: Router) {
-
+    this.applicantService.getApplicants();
   }
 
   ngOnInit() {

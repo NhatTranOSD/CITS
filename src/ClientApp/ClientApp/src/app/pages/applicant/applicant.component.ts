@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Applicant } from '../../models/applicant.model';
+import { Applicant, ApplicantStatusDisplay } from '../../models/applicant.model';
 import { AuthService } from '../../services/auth.service';
 import { ApplicantService } from '../../services/applicant.service';
 import { first } from 'rxjs/operators';
@@ -16,6 +16,7 @@ export class ApplicantComponent implements OnInit {
   submitted = false;
   formData: FormData;
   documentLink: string;
+  applicantStatusDisplay: string[] = ApplicantStatusDisplay;
 
   constructor(private authService: AuthService, private applicantService: ApplicantService) {
   }

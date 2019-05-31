@@ -57,7 +57,7 @@ namespace RFQ.Service.Services
 
             await _context.SaveChangesAsync(CancellationToken.None);
 
-            // await _emailService.EmailApplicant(applicantCreateRequest.Email, passWord);
+            await _emailService.EmailApplicant(applicantCreateRequest.Email, passWord);
             return _mapper.Map<ApplicantResponse>(applicant);
         }
 
@@ -69,6 +69,7 @@ namespace RFQ.Service.Services
             applicant.FullName = applicantRequest.FullName;
             applicant.PhoneNumber = applicantRequest.PhoneNumber;
             applicant.Description = applicantRequest.Description;
+            applicant.Status = ApplicantStatus.Applicant_Review;
 
             await _context.SaveChangesAsync(CancellationToken.None);
 
@@ -77,16 +78,20 @@ namespace RFQ.Service.Services
 
         public async Task<ApplicantResponse> ApplicantInfoAsync(string applicantId)
         {
-            var data = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantId);
+            var applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantId);
 
-            return _mapper.Map<ApplicantResponse>(data);
+            await ChangeStatusApplicant(applicant, ApplicantStatus.Agent_Reviewed);
+
+            return _mapper.Map<ApplicantResponse>(applicant);
         }
 
         public async Task<ApplicantResponse> ApplicantInfoByUserId(string userId)
         {
-            var data = await _context.Applicant.SingleOrDefaultAsync(x => x.ApplicantUserId.ToString() == userId);
+            var applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.ApplicantUserId.ToString() == userId);
 
-            return _mapper.Map<ApplicantResponse>(data);
+            //await ChangeStatusApplicant(applicant, ApplicantStatus.Applicant_Review);
+
+            return _mapper.Map<ApplicantResponse>(applicant);
         }
 
         public async Task<bool> UploadFile(string applicantId, string filePath)
@@ -94,6 +99,7 @@ namespace RFQ.Service.Services
             Applicant applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantId);
 
             applicant.DocumentPath = filePath;
+            applicant.Status = ApplicantStatus.Applicant_Completed;
 
             _context.Applicant.Update(applicant);
 
@@ -117,9 +123,10 @@ namespace RFQ.Service.Services
         public async Task<bool> AcceptApplicant(string applicantId)
         {
             var applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantId);
-            applicant.Status = ApplicantStatus.Agent_Reviewed;
 
-            await ChangeStatusApplicant(applicant);
+            await ChangeStatusApplicant(applicant, ApplicantStatus.Agent_Approved);
+
+            await _emailService.EmailAgentApprove(applicant.Email);
 
             return true;
         }
@@ -127,15 +134,17 @@ namespace RFQ.Service.Services
         public async Task<bool> RefuseApplicant(string applicantId)
         {
             var applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantId);
-            applicant.Status = ApplicantStatus.Agent_Decilined;
 
-            await ChangeStatusApplicant(applicant);
+            await ChangeStatusApplicant(applicant, ApplicantStatus.Agent_Decilined);
+
+            await _emailService.EmailAgentReject(applicant.Email);
 
             return true;
         }
 
-        private async Task ChangeStatusApplicant(Applicant applicant)
+        private async Task ChangeStatusApplicant(Applicant applicant, ApplicantStatus status)
         {
+            applicant.Status = status;
             var ct = _context.Applicant.Attach(applicant);
             ct.Property(x => x.Status).IsModified = true;
 

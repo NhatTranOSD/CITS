@@ -12,5 +12,9 @@ namespace RFQ.Service.Interface
         Task EmailAgentReviewer(string email);
 
         Task EmailAgentReviewerReminder(string email);
+
+        Task EmailAgentApprove(string email);
+
+        Task EmailAgentReject(string email);
     }
 }
