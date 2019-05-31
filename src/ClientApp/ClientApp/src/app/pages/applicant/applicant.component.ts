@@ -53,7 +53,16 @@ export class ApplicantComponent implements OnInit {
           console.log(error);
         });
 
-    this.applicantService.uploadFiles(this.formData);
-
+    if (this.formData != null) {
+      this.applicantService.uploadFiles(this.applicant.id, this.formData).pipe(first())
+        .subscribe(
+          data => {
+            console.log(data);
+            this.submitted = true;
+          },
+          error => {
+            console.log(error);
+          });
+    }
   }
 }
