@@ -89,7 +89,7 @@ namespace RFQ.Service.Services
             return _mapper.Map<ApplicantResponse>(data);
         }
 
-        public Task<bool> UploadFile(string applicantId)
+        public Task<bool> UploadFile(string applicantId, string filePath)
         {
             return null;
         }

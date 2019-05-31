@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +11,7 @@ using RFQ.Entites;
 using RFQ.Service.Interface;
 using RFQ.Service.Models.Reponses;
 using RFQ.Service.Models.Request;
+using RFQ.Common.FileSaving;
 
 namespace RFQ.Api.Controllers
 {
@@ -77,10 +80,32 @@ namespace RFQ.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<bool>> UploadFile(string Id, IFormFile formFile)
+        public async Task<ActionResult<bool>> UploadFile(string Id)
         {
-            var result = await _applicantService.UploadFile(Id);
-            return Ok(result);
+            try
+            {
+                var file = Request.Form.Files[0];
+                string filePath = string.Empty;
+
+                if (file != null)
+                {
+                    filePath = FileSaving.SaveFile(file);
+                }
+
+                if (string.IsNullOrEmpty(filePath) && string.IsNullOrEmpty(Id))
+                {
+                    await _applicantService.UploadFile(Id , filePath);
+                }
+
+                return Ok("All the files are successfully uploaded.");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+                throw ex;
+            }
+
         }
 
         [Route("{Id}/Content")]

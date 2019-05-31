@@ -20,7 +20,7 @@ namespace RFQ.Service.Interface
 
         Task<ApplicantResponse> ApplicantInfoByUserId(string userId);
 
-        Task<bool> UploadFile(string applicantId); // Consider fileContent
+        Task<bool> UploadFile(string applicantId, string filePath); // Consider fileContent
 
         Task<string> GetContent(string applicantId); // return content Url
 

@@ -50,11 +50,12 @@ export class ApplicantService {
     return this.http.post<Applicant>(`${baseUrl}api/v1/Applicant/ApplicantInfoByUserId/${userId}`, httpOptions).pipe(map(result => result));
   }
 
-  public uploadFiles(formData: FormData): any {
+  public uploadFiles(applicantId: string, formData: FormData): any {
 
-    // return this.http.post<User>(`${baseUrl}api/v1/Auth/login`, user, httpOptions).pipe(map(result => { return result }));
-
-    return true;
+    return this.http.post<boolean>(`${baseUrl}api/v1/Applicant/${applicantId}/UploadFile`, formData, {
+      reportProgress: true,
+    })
+      .pipe(map(result => result));
   }
 
   public getContents(applicantId: string): any {

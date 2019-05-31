@@ -12,10 +12,20 @@ import { LoginComponent } from './pages/login/login.component';
 import { ReviewComponent } from './pages/review/review.component';
 import { MessageComponent } from './components/message/message.component';
 import { CreateApplicantComponent } from './pages/create-applicant/create-applicant.component';
+import { ApplicantComponent } from './pages/applicant/applicant.component';
+import { AgentComponent } from './pages/agent/agent.component';
+
+import { APP_BASE_HREF } from '@angular/common';
 
 @NgModule({
   declarations: [
-    AppComponent, LoginComponent, ReviewComponent, MessageComponent, CreateApplicantComponent
+    AppComponent,
+    ApplicantComponent,
+    AgentComponent,
+    LoginComponent,
+    ReviewComponent,
+    MessageComponent,
+    CreateApplicantComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +36,7 @@ import { CreateApplicantComponent } from './pages/create-applicant/create-applic
     HttpClientModule,
     PdfViewerModule
   ],
-  providers: [],
+  providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
