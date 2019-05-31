@@ -20,7 +20,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RFQ.Api.Filters;
 using RFQ.Common.AutoMapper;
-using RFQ.Common.Settings;
 using RFQ.Data.Context;
 using RFQ.Service.Interface;
 using RFQ.Service.Services;
@@ -51,14 +50,14 @@ namespace RFQ.Api
                                 });
             });
 
-            services.Configure<EmailSettings>(options => Configuration.GetSection("EmailSettings").Bind(options));
+
             // Add AutoMapper
             services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).GetTypeInfo().Assembly });
 
             services.AddDbContext<IRFQContext, RFQContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("RFQDatabase")));
 
-            services.AddSingleton<IHostedService, AgentReminderService>();
+            //services.AddSingleton<IHostedService, AgentReminderService>();
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IApplicantService, ApplicantService>();

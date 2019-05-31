@@ -92,9 +92,9 @@ namespace RFQ.Api.Controllers
                     filePath = FileSaving.SaveFile(file);
                 }
 
-                if (string.IsNullOrEmpty(filePath) && string.IsNullOrEmpty(Id))
+                if (!string.IsNullOrEmpty(filePath) && !string.IsNullOrEmpty(Id))
                 {
-                    await _applicantService.UploadFile(Id , filePath);
+                    await _applicantService.UploadFile(Id, filePath);
                 }
 
                 return Ok("All the files are successfully uploaded.");

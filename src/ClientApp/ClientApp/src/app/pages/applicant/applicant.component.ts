@@ -42,11 +42,14 @@ export class ApplicantComponent implements OnInit {
     }
   }
 
+  back(): void {
+    this.submitted = false;
+  }
+
   onSubmit() {
     this.applicantService.updateApplicant(this.applicant).pipe(first())
       .subscribe(
         data => {
-          console.log(data);
           this.submitted = true;
         },
         error => {
@@ -57,7 +60,6 @@ export class ApplicantComponent implements OnInit {
       this.applicantService.uploadFiles(this.applicant.id, this.formData).pipe(first())
         .subscribe(
           data => {
-            console.log(data);
             this.submitted = true;
           },
           error => {

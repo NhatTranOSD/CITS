@@ -6,13 +6,13 @@ namespace RFQ.Common.Enums
 {
     public enum ApplicantStatus
     {
-        New,
-        Applicant_Review,
-        Applicant_Completed,
-        Agent_Review,
-        Agent_Review_Reminder,
-        Agent_Reviewed,
-        Agent_Decilined,
-        Agent_Approved
+        New = 0,
+        Applicant_Review = 1,
+        Applicant_Completed = 2,
+        Agent_Review = 3,
+        Agent_Review_Reminder = 4,
+        Agent_Reviewed = 5,
+        Agent_Decilined = 6,
+        Agent_Approved = 7,
     }
 }
