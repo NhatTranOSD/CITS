@@ -28,3 +28,4 @@ src/RFQ/Apis/AuthApi/bin/
 /src/ClientApp/ClientApp
 /src/RFQ/RFQ.Entites/bin/Release/netcoreapp2.1
 /src/RFQ/RFQ.Service/bin/Release/netcoreapp2.1
+/src/RFQ/RFQ.Common/bin

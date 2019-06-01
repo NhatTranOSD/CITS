@@ -48,7 +48,7 @@ export class AuthService {
     return this.user;
   }
 
-  public checkLogin(): void {
+  public checkAuth(): void {
     const isLogin = JSON.parse(localStorage.getItem('isLogin'));
 
     if (isLogin != null) {

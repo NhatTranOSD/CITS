@@ -6,9 +6,12 @@
         <div class="col-4">
             <h2>Applicant Review: {{applicant.applicantId}}</h2>
         </div>
-        <div *ngIf="applicant.status < 6" class="col-8">
+        <div *ngIf="applicant.status < 6 && applicant.status > 1" class="col-8">
             <button (click)="accept(applicant.id)" type="button" class="btn btn-success">Accept</button>|
             <button (click)="refuse(applicant.id)" type="button" class="btn btn-danger">Refuse</button>
+        </div>
+        <div *ngIf="applicant.status < 2">
+                Waiting for Applicant complete infomations ...
         </div>
     </div>
     <div>

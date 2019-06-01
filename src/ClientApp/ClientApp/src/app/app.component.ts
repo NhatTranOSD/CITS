@@ -13,12 +13,12 @@ export class AppComponent {
 
   constructor(public authService: AuthService, private router: Router) {
     // localStorage.clear();
-    this.isLogin();
+    this.checkAuth();
   }
 
-  isLogin(): void {
+  checkAuth(): void {
 
-    this.authService.checkLogin();
+    this.authService.checkAuth();
 
     this.isLoading = false;
   }

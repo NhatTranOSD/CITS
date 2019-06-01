@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    if (this.authService.checkLogin) {
+    if (this.authService.IsLogin()) {
       this.authService.logout();
     }
 

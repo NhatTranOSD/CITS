@@ -92,7 +92,7 @@ namespace RFQ.Service.Services
         {
             var applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.Id.ToString() == applicantId);
 
-            if (applicant.Status < ApplicantStatus.Agent_Declined)
+            if (applicant.Status == ApplicantStatus.Applicant_Completed)
             {
                 await ChangeStatusApplicant(applicant, ApplicantStatus.Agent_Reviewed);
             }
@@ -103,8 +103,6 @@ namespace RFQ.Service.Services
         public async Task<ApplicantResponse> ApplicantInfoByUserId(string userId)
         {
             var applicant = await _context.Applicant.SingleOrDefaultAsync(x => x.ApplicantUserId.ToString() == userId);
-
-            //await ChangeStatusApplicant(applicant, ApplicantStatus.Applicant_Review);
 
             return _mapper.Map<ApplicantResponse>(applicant);
         }
