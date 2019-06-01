@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'agent', component: AgentComponent },
   { path: 'review/:id', component: ReviewComponent },
   { path: 'newapplicant', component: CreateApplicantComponent },
-  // { path: 'org', loadChildren: './pages/organization/organization.module#OrganizationModule' },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({

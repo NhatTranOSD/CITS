@@ -22,12 +22,6 @@ export class ApplicantService {
   public applicants: Applicant[];
 
   constructor(private http: HttpClient) {
-
-    // const isLogin = JSON.parse(localStorage.getItem('isLogin'));
-
-    // if (isLogin === true) {
-    //   this.getApplicants();
-    // }
   }
 
   public async getApplicants() {
@@ -38,7 +32,7 @@ export class ApplicantService {
     await this.http.get<Applicant[]>(`${baseUrl}api/v1/Applicant/${currentUser.id}`, httpOptions)
       .subscribe(result => {
         this.applicants = result;
-        console.log(result);
+        // console.log(result);
       }, error => console.error(error));
   }
 
