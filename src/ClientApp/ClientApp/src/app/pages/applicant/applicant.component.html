@@ -7,11 +7,11 @@
 
         <div class="form-group">
             <b>Email: {{applicant.email}}</b>
-            <h3 *ngIf="(applicant.status < 3)">Status <span class="badge badge-secondary">{{applicantStatusDisplay[applicant.status]}}</span></h3>
+            <h3 *ngIf="(applicant.status < 6)">Status <span class="badge badge-secondary">{{applicantStatusDisplay[applicant.status]}}</span></h3>
             <h3 *ngIf="(applicant.status == 6)">Status <span class="badge badge-warning">{{applicantStatusDisplay[applicant.status]}}</span></h3>
             <h3 *ngIf="(applicant.status == 7)">Status <span class="badge badge-success">{{applicantStatusDisplay[applicant.status]}}</span></h3>
         </div>
-        <div *ngIf="applicant.status < 3">
+        <div *ngIf="applicant.status < 6">
             <form #applicantForm="ngForm">
                 <h1>Applicant Form</h1>
 
