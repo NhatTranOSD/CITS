@@ -2,14 +2,22 @@
     Submitted successfully! <button (click)="back()" type="button" class="btn btn-link">Back</button>
 </div>
 
+<div *ngIf="isLoading" class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+<div *ngIf="uploadErrMessage !== ''" class="text-danger">{{uploadErrMessage}}</div>
+
 <div class="container">
     <div *ngIf="applicant" class="col-5" [hidden]="submitted">
 
         <div class="form-group">
             <b>Email: {{applicant.email}}</b>
-            <h3 *ngIf="(applicant.status < 6)">Status <span class="badge badge-secondary">{{applicantStatusDisplay[applicant.status]}}</span></h3>
-            <h3 *ngIf="(applicant.status == 6)">Status <span class="badge badge-warning">{{applicantStatusDisplay[applicant.status]}}</span></h3>
-            <h3 *ngIf="(applicant.status == 7)">Status <span class="badge badge-success">{{applicantStatusDisplay[applicant.status]}}</span></h3>
+            <h3 *ngIf="(applicant.status < 6)">Status <span
+                    class="badge badge-secondary">{{applicantStatusDisplay[applicant.status]}}</span></h3>
+            <h3 *ngIf="(applicant.status == 6)">Status <span
+                    class="badge badge-warning">{{applicantStatusDisplay[applicant.status]}}</span></h3>
+            <h3 *ngIf="(applicant.status == 7)">Status <span
+                    class="badge badge-success">{{applicantStatusDisplay[applicant.status]}}</span></h3>
         </div>
         <div *ngIf="applicant.status !== 7">
             <form #applicantForm="ngForm">
@@ -17,7 +25,8 @@
 
                 <div class="form-group">
                     <label for="applicantName">Name</label>
-                    <input type="text" class="form-control" id="applicantName" required [(ngModel)]="applicant.fullName" name="applicantName" #name="ngModel">
+                    <input type="text" class="form-control" id="applicantName" required [(ngModel)]="applicant.fullName"
+                        name="applicantName" #name="ngModel">
                     <!-- <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger">
                     Name is required
                 </div> -->
@@ -25,7 +34,8 @@
 
                 <div class="form-group">
                     <label for="userName">Address</label>
-                    <input type="text" class="form-control" id="address" required [(ngModel)]="applicant.address" name="address" #name="ngModel">
+                    <input type="text" class="form-control" id="address" required [(ngModel)]="applicant.address"
+                        name="address" #name="ngModel">
                     <!-- <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger">
                         Name is required
                     </div> -->
@@ -33,7 +43,8 @@
 
                 <div class="form-group">
                     <label for="userName">Phone Number</label>
-                    <input type="text" class="form-control" id="phoneNumber" required [(ngModel)]="applicant.phoneNumber" name="phoneNumber" #name="ngModel">
+                    <input type="text" class="form-control" id="phoneNumber" required
+                        [(ngModel)]="applicant.phoneNumber" name="phoneNumber" #name="ngModel">
                     <!-- <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger">
                             Name is required
                         </div> -->
@@ -41,7 +52,8 @@
 
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input type="text" class="form-control" id="description" required [(ngModel)]="applicant.description" name="description" #name="ngModel">
+                    <input type="text" class="form-control" id="description" required
+                        [(ngModel)]="applicant.description" name="description" #name="ngModel">
                     <!-- <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger">
                                 Name is required
                             </div> -->
@@ -53,7 +65,8 @@
                     <a *ngIf="documentLink" href="{{documentLink}}">{{applicant.documentPath}}</a>
                 </div>
 
-                <button (click)="onSubmit()" class="btn btn-success" [disabled]="!applicantForm.form.valid">Submit</button>
+                <button (click)="onSubmit()" class="btn btn-success"
+                    [disabled]="!applicantForm.form.valid">Submit</button>
                 <!-- <button type="button" class="btn btn-default" (click)="newHero(); applicantForm.reset()">New Hero</button> -->
             </form>
         </div>

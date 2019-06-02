@@ -100,7 +100,7 @@ namespace RFQ.Api.Controllers
                     await _applicantService.UploadFile(Id, filePath);
                 }
 
-                return Ok("All the files are successfully uploaded.");
+                return Ok(true);
 
             }
             catch (Exception ex)

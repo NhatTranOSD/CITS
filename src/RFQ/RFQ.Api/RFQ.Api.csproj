@@ -7,9 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="StaticFiles\files\" />
-    <Folder Include="wwwroot\NewFolder\" />
-    <Folder Include="wwwroot\StaticFiles\files\" />
+    <Compile Remove="StaticFiles\**" />
+    <Compile Remove="wwwroot\NewFolder\**" />
+    <Content Remove="StaticFiles\**" />
+    <Content Remove="wwwroot\NewFolder\**" />
+    <EmbeddedResource Remove="StaticFiles\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder\**" />
+    <None Remove="StaticFiles\**" />
+    <None Remove="wwwroot\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>

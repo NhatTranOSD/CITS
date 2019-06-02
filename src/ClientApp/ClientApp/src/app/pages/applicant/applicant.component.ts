@@ -12,16 +12,20 @@ import { environment } from '../../../environments/environment';
 })
 export class ApplicantComponent implements OnInit {
 
-  applicant: Applicant;
-  submitted = false;
-  formData: FormData;
-  documentLink: string;
-  applicantStatusDisplay: string[] = ApplicantStatusDisplay;
+  public isLoading: boolean;
+  public applicant: Applicant;
+  public submitted = false;
+  public formData: FormData;
+  public documentLink: string;
+  public uploadErrMessage: string;
+  public applicantStatusDisplay: string[] = ApplicantStatusDisplay;
 
   constructor(private authService: AuthService, private applicantService: ApplicantService) {
   }
 
   ngOnInit() {
+    this.isLoading = true;
+    this.uploadErrMessage = '';
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
     this.applicantService.getApplicantInfoByUserId(currentUser.id).pipe(first())
@@ -32,10 +36,11 @@ export class ApplicantComponent implements OnInit {
           if (this.applicant.documentPath !== null) {
             this.documentLink = `${environment.apiUrl}api/v1/Applicant/${this.applicant.id}/Content`;
           }
-
+          this.isLoading = false;
         },
         error => {
           console.log(error);
+          this.isLoading = false;
         });
   }
 
@@ -56,23 +61,33 @@ export class ApplicantComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isLoading = true;
     this.applicantService.updateApplicant(this.applicant).pipe(first())
       .subscribe(
         data => {
           this.submitted = true;
+          this.isLoading = false;
         },
         error => {
           console.log(error);
+          this.submitted = false;
+          this.isLoading = false;
         });
 
     if (this.formData != null) {
+      this.isLoading = true;
+      this.submitted = false;
       this.applicantService.uploadFiles(this.applicant.id, this.formData).pipe(first())
         .subscribe(
           data => {
             this.submitted = true;
+            this.isLoading = false;
           },
           error => {
             console.log(error);
+            // this.submitted = false;
+            this.isLoading = false;
+            // this.uploadErrMessage = 'Failed to upload document!';
           });
     }
   }

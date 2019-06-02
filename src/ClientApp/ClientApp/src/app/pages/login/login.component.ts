@@ -13,13 +13,13 @@ import { UserLogin } from '../../models/userlogin.model';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup;
-  isLogin = false;
-  isLoading = true;
-  loginStatus = '';
-  submitted = false;
+  public loginForm: FormGroup;
+  public isLogin = false;
+  public isLoading: boolean;
+  public loginStatus = '';
+  public submitted = false;
 
-  user: UserLogin = {
+  private user: UserLogin = {
     userName: '',
     passWord: '',
   };
@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -43,11 +44,14 @@ export class LoginComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   onSubmit() {
+    this.isLoading = true;
     this.loginStatus = '';
+
     this.user.userName = this.f.username.value;
     this.user.passWord = this.f.password.value;
 
     if (this.user.userName !== '' && this.user.passWord !== '') {
+      this.isLoading = true;
       this.authService.login(this.user).pipe(first())
         .subscribe(
           data => {
@@ -58,15 +62,19 @@ export class LoginComponent implements OnInit {
               localStorage.setItem('currentUser', JSON.stringify(data));
 
               this.authService.directUser(data);
+              this.isLoading = false;
             } else {
               this.loginStatus = 'Invalid username or password';
+              this.isLoading = false;
             }
           },
           error => {
             console.log(error);
+            this.isLoading = false;
           });
     }
 
     this.submitted = true;
+    this.isLoading = false;
   }
 }

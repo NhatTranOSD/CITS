@@ -12,23 +12,29 @@ namespace RFQ.Common
         private static string folderName = Path.Combine("StaticFiles", "files");
         public static string SaveFile(IFormFile file, string rootPath)
         {
-            if (file != null)
+            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+            try
             {
-                var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                string pathToSave = Path.Combine(rootPath, folderName);
-
-                var fullPath = Path.Combine(pathToSave, fileName);
-                var dbPath = fileName; //you can add this path to a list and then return all dbPaths to the client if require
-
-                using (var stream = new FileStream(fullPath, FileMode.Create))
+                if (file != null)
                 {
-                    file.CopyTo(stream);
+                    string pathToSave = Path.Combine(rootPath, folderName);
+
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = fileName; //you can add this path to a list and then return all dbPaths to the client if require
+
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+
+                    return dbPath;
                 }
-
-                return dbPath;
             }
+            catch
+            {
 
-            return null;
+            }
+            return fileName;
         }
 
         public static FileStream DownloadFile(string fileName, string rootPath)

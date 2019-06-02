@@ -10,13 +10,17 @@ import { ApplicantStatusDisplay } from '../../models/applicant.model';
 })
 export class AgentComponent implements OnInit {
 
+  public isLoading: boolean;
+
   public applicantStatusDisplay: string[] = ApplicantStatusDisplay;
 
   constructor(public applicantService: ApplicantService, private router: Router) {
-    this.applicantService.getApplicants();
   }
 
   ngOnInit() {
+    this.isLoading = true;
+    this.applicantService.getApplicants();
+    this.isLoading = false;
   }
 
   reviewApplicant(applicantId: string) {

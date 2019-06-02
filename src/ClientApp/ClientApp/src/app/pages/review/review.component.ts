@@ -13,6 +13,7 @@ import { environment } from '../../../environments/environment';
 })
 export class ReviewComponent implements OnInit {
 
+  public isLoading: boolean;
   applicant: Applicant;
   documentLink: string;
 
@@ -21,11 +22,12 @@ export class ReviewComponent implements OnInit {
   contentUri = '';
 
   constructor(private messageService: MessageService,
-              private router: Router,
-              private applicantService: ApplicantService,
-              private activatedRoute: ActivatedRoute) { }
+    private router: Router,
+    private applicantService: ApplicantService,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.isLoading = true;
     const applicantId = this.activatedRoute.snapshot.paramMap.get('id');
 
     this.applicantService.getApplicantInfo(applicantId).pipe(first())
@@ -36,30 +38,36 @@ export class ReviewComponent implements OnInit {
           if (this.applicant.documentPath !== null) {
             this.documentLink = `${environment.apiUrl}api/v1/Applicant/${this.applicant.id}/Content`;
           }
+          this.isLoading = false;
         },
         error => {
           console.log(error);
+          this.isLoading = false;
         });
   }
 
   accept(applicantId: string): void {
+    this.isLoading = true;
     this.applicantService.acceptApplicant(applicantId).pipe(first())
       .subscribe(
         data => {
-          console.log(data);
           // reload data
           this.applicantService.getApplicants();
 
           alert(`Accepted ApplicantId: ${applicantId}`);
 
           this.router.navigate(['/agent']);
+
+          this.isLoading = false;
         },
         error => {
           console.log(error);
+          this.isLoading = false;
         });
   }
 
   refuse(applicantId: string): void {
+    this.isLoading = true;
     this.applicantService.refuseApplicant(applicantId).pipe(first())
       .subscribe(
         data => {
@@ -70,9 +78,11 @@ export class ReviewComponent implements OnInit {
           alert(`Refused ApplicantId: ${applicantId}`);
 
           this.router.navigate(['/agent']);
+          this.isLoading = false;
         },
         error => {
           console.log(error);
+          this.isLoading = false;
         });
   }
 
