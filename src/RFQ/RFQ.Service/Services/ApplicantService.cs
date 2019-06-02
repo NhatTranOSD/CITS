@@ -81,6 +81,7 @@ namespace RFQ.Service.Services
             applicant.FullName = applicantRequest.FullName;
             applicant.PhoneNumber = applicantRequest.PhoneNumber;
             applicant.Description = applicantRequest.Description;
+            applicant.UpdatedDate = DateTime.UtcNow;
             applicant.Status = ApplicantStatus.Applicant_Review;
 
             await _context.SaveChangesAsync(CancellationToken.None);
@@ -113,6 +114,7 @@ namespace RFQ.Service.Services
 
             applicant.DocumentPath = filePath;
             applicant.Status = ApplicantStatus.Applicant_Completed;
+            applicant.UpdatedDate = DateTime.UtcNow;
 
             _context.Applicant.Update(applicant);
 
