@@ -65,7 +65,7 @@
                     <a *ngIf="documentLink" href="{{documentLink}}">{{applicant.documentPath}}</a>
                 </div>
 
-                <button (click)="onSubmit()" class="btn btn-success"
+                <button *ngIf="applicant.status === 6 || applicant.status < 2" (click)="onSubmit()" class="btn btn-success"
                     [disabled]="!applicantForm.form.valid">Submit</button>
                 <!-- <button type="button" class="btn btn-default" (click)="newHero(); applicantForm.reset()">New Hero</button> -->
             </form>
