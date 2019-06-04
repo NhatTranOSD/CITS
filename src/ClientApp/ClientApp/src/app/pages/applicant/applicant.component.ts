@@ -67,28 +67,29 @@ export class ApplicantComponent implements OnInit {
         data => {
           this.submitted = true;
           this.isLoading = false;
+
+          if (this.formData != null) {
+            this.isLoading = true;
+            this.submitted = false;
+            this.applicantService.uploadFiles(this.applicant.id, this.formData).pipe(first())
+              .subscribe(
+                result => {
+                  this.submitted = true;
+                  this.isLoading = false;
+                },
+                error => {
+                  console.log(error);
+                  // this.submitted = false;
+                  this.isLoading = false;
+                  // this.uploadErrMessage = 'Failed to upload document!';
+                });
+          }
+
         },
         error => {
           console.log(error);
           this.submitted = false;
           this.isLoading = false;
         });
-
-    if (this.formData != null) {
-      this.isLoading = true;
-      this.submitted = false;
-      this.applicantService.uploadFiles(this.applicant.id, this.formData).pipe(first())
-        .subscribe(
-          data => {
-            this.submitted = true;
-            this.isLoading = false;
-          },
-          error => {
-            console.log(error);
-            // this.submitted = false;
-            this.isLoading = false;
-            // this.uploadErrMessage = 'Failed to upload document!';
-          });
-    }
   }
 }
